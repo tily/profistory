@@ -38,7 +38,7 @@ end
 
 helpers do
 	def current_user
-		!session[:uid].nil?
+		@current_user ||= User.where(uid: session[:uid]).first
 	end
 end
 
@@ -52,8 +52,10 @@ after do
 end
 
 get '/auth/twitter/callback' do
-	session[:uid] = env['omniauth.auth']['uid']
-	redirect to('/')
+	auth = request.env["omniauth.auth"]
+	account = User.where(:provider => auth["provider"], :uid => auth["uid"]).first || User.create_with_omniauth(auth)
+	session[:uid] = auth["uid"]
+	redirect "http://#{request.env["HTTP_HOST"]}/#{account.screen_name}"
 end
 
 get '/auth/failure' do
