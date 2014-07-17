@@ -61,6 +61,11 @@ end
 get '/auth/failure' do
 end
 
+get '/logout' do
+	session[:uid] = nil
+	redirect '/'
+end
+
 get '/' do
 	'Hello omniauth-twitter!'
 end
