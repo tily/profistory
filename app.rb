@@ -1,5 +1,15 @@
 require 'sinatra'
 require 'omniauth-twitter'
+require 'mongoid'
+
+if ENV['MONGOHQ_URL']
+	uri = URI.parse(ENV['MONGOHQ_URL'])
+	database = Mongo::Connection.new(uri.host, uri.port).db(uri.path.gsub(/^\//, ''))
+	database.authenticate(uri.user, uri.password) unless (uri.user.nil? || uri.password.nil?)
+	Mongoid.database = database
+else
+	Mongoid.database = Mongo::Connection.new('localhost', Mongo::Connection::DEFAULT_PORT).db('nnade_development')
+end
 
 configure do
 	enable :sessions
