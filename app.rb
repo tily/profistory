@@ -47,6 +47,10 @@ before do
 	redirect to('/auth/twitter') unless current_user
 end
 
+after do
+	response.body = haml env['sinatra.route'].split(' ').last.intern if response.status == 200
+end
+
 get '/auth/twitter/callback' do
 	session[:uid] = env['omniauth.auth']['uid']
 	redirect to('/')
