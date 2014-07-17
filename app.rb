@@ -11,6 +11,23 @@ else
 	Mongoid.database = Mongo::Connection.new('localhost', Mongo::Connection::DEFAULT_PORT).db('nnade_development')
 end
 
+class User
+	include Mongoid::Document
+	include Mongoid::Timestamps # adds created_at and updated_at fields
+	field :screen_name, :type => String
+	field :uid, :type => String
+	field :provider, :type => String
+	key :id
+	references_many :works
+	def self.create_with_omniauth(auth)
+		create! do |account|
+			account.provider = auth["provider"]
+			account.uid = auth["uid"]
+			account.screen_name = auth["info"]["nickname"]
+		end
+	end
+end
+
 configure do
 	enable :sessions
 	use OmniAuth::Builder do
