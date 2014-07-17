@@ -53,9 +53,9 @@ end
 
 get '/auth/twitter/callback' do
 	auth = request.env["omniauth.auth"]
-	account = User.where(:provider => auth["provider"], :uid => auth["uid"]).first || User.create_with_omniauth(auth)
+	user = User.where(:provider => auth["provider"], :uid => auth["uid"]).first || User.create_with_omniauth(auth)
 	session[:uid] = auth["uid"]
-	redirect "http://#{request.env["HTTP_HOST"]}/#{account.screen_name}"
+	redirect "http://#{request.env["HTTP_HOST"]}/#{user.screen_name}"
 end
 
 get '/auth/failure' do
