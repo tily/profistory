@@ -200,7 +200,7 @@ Create your portfolio with URL list
 @@ /:screen_name.json
 json.array!(@user.works) do |work|
 	json.title work.title
-	-# json.description work.description
+	json.description work.description
 	json.date work.date
 	json.links work.links
 end
