@@ -228,7 +228,8 @@ end
 		- links.each do |link|
 			%div.col-md-3{style:'padding-bottom:10px'}
 				%a{href:link}= link
-	%hr
+	- if i != @work.links.size - 1
+		%hr
 :javascript
 	var width = $('div.row div').width()
 	$('div.row a').each(function(i, e) {
