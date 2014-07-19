@@ -122,6 +122,7 @@ end
 
 get '/:screen_name' do
 	@user = User.where(:screen_name => params[:screen_name]).first
+	@works = @user.works.desc(:date)
 	@years = @user.works.map {|work| work.date.year }.uniq.sort.reverse
 	haml :'/:screen_name'
 end
@@ -193,7 +194,7 @@ Create your portfolio with URL list
 		%div.col-md-4
 			%h2= year
 			%ul
-				- @user.works.each do |work|
+				- @works.each do |work|
 					- if work.date.year == year
 						%li
 							%a{href:"/#{@user.screen_name}/#{work.title}",alt:work.description}= work.title
