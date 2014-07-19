@@ -243,8 +243,9 @@ end
 			 	} else if(result[0].media && result[0].media.html) {
 					$(e).html(result[0].media.html)
 				} else {
-					console.log(result[0].title)
-					$(e).html(result[0].title)
+					if(result[0].title) {
+						$(e).html(result[0].title)
+					}
 					$(e).after('<br />', result[0].description)
 				}
 			}	
