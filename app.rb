@@ -188,6 +188,8 @@ Create your portfolio with URL list
 @@ /:screen_name
 - if @user == current_user
 	%a{href:"/#{@user.screen_name}/*/edit"} add work
+	&nbsp;|&nbsp;
+%a{href:"/#{@user.screen_name}.json"} get json
 %h1= @user.screen_name
 %div.row
 	- @years.each do |year|
