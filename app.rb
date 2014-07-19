@@ -98,7 +98,7 @@ get '/logout' do
 end
 
 get '/' do
-	@works = Work.limit(20)
+	@works = Work.desc(:created_at).limit(20)
 	haml :'/'
 end
 
@@ -184,7 +184,14 @@ __END__
 			%hr
 			!= yield
 @@ /
-Create your portfolio with URL list
+Create your portfolio with URLs
+%h2 recent works
+%ul
+	- @works.each do |work|
+		%li
+			%a{href:"/#{work.user.screen_name}/#{work.title}"}= work.title
+			by
+			= work.user.screen_name
 @@ /:screen_name
 - if @user == current_user
 	%a{href:"/#{@user.screen_name}/*/edit"} add work
