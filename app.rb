@@ -98,6 +98,7 @@ get '/logout' do
 end
 
 get '/' do
+	@works = Work.limit(20)
 	haml :'/'
 end
 
@@ -160,6 +161,7 @@ __END__
 		:css
 			a,a:hover { color:blue }
 			img { max-width: 100% }
+			div { word-break: break-all }
 	%body
 		%div.container
 			%p{style:"padding-top:1em;padding-bottom:0em"}
@@ -181,8 +183,7 @@ __END__
 			%hr
 			!= yield
 @@ /
-Create your portfolio with URL list.
-Contact @tily if any problem.
+Create your portfolio with URL list
 @@ /:screen_name
 - if @user == current_user
 	%a{href:"/#{@user.screen_name}/*/edit"} add work
