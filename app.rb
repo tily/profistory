@@ -274,7 +274,7 @@ end
 	%div.form-group
 		%label.col-sm-2.control-label{for:'links'} links
 		%div.col-sm-10
-			%span.help-block insert empty lines to group your links
+			%span.help-block one url per one line, insert empty lines to group your links
 			%textarea.form-control{name:'links_text',rows:'25',style:'height: 1000'}
 				= @work.try(:links_text)
 	%div.form-group
