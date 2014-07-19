@@ -1,6 +1,6 @@
 # nnade
 
-source code repository of nnade (https://nnade.herokuapp.com/)
+source code repository of nnade (http://nnade.herokuapp.com/)
 
 ## TODO
 
