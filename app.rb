@@ -46,6 +46,7 @@ configure do
 	enable :sessions
 	set :session_secret, ENV['SESSION_SECRET']
 	set :haml, ugly: true, escape_html: true
+	set :protection, :except => :path_traversal
 
 	use OmniAuth::Builder do
 		provider :twitter, ENV['CONSUMER_KEY'], ENV['CONSUMER_SECRET']
@@ -142,7 +143,7 @@ post '/:screen_name' do
 		@work = current_user.works.create(attributes)
 	end
 	if @work.save
-		redirect URI.escape "http://#{request.env["HTTP_HOST"]}/#{current_user.screen_name}/#{@work.title}"
+		redirect "http://#{request.env["HTTP_HOST"]}/#{current_user.screen_name}/#{CGI.escape(@work.title)}"
 	else
 		haml :'/:screen_name/:title/edit'
 	end
@@ -189,7 +190,7 @@ Create your portfolio with URLs
 %ul
 	- @works.each do |work|
 		%li
-			%a{href:"/#{work.user.screen_name}/#{work.title}"}= work.title
+			%a{href:"/#{work.user.screen_name}/#{CGI.escape(work.title)}"}= work.title
 			by
 			= work.user.screen_name
 @@ /:screen_name
@@ -206,7 +207,7 @@ Create your portfolio with URLs
 				- @works.each do |work|
 					- if work.date.year == year
 						%li
-							%a{href:"/#{@user.screen_name}/#{work.title}",alt:work.description}= work.title
+							%a{href:"/#{@user.screen_name}/#{CGI.escape(work.title)}",alt:work.description}= work.title
 @@ /:screen_name.json
 json.array!(@user.works) do |work|
 	json.title work.title
@@ -216,7 +217,7 @@ json.array!(@user.works) do |work|
 end
 @@ /:screen_name/:title
 - if @user == current_user
-	%a{href:"/#{@user.screen_name}/#{@work.title}/edit"} edit work
+	%a{href:"/#{@user.screen_name}/#{CGI.escape(@work.title)}/edit"} edit work
 %p
 	%h1
 		= @work.title
