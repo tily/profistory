@@ -71,7 +71,7 @@ helpers do
 	def title
 		title = TITLE.dup
 		title << " > #{params[:screen_name]}" if params[:screen_name]
-		title << " > #{params[:title]}" if params[:title]
+		title << " > #{CGI.unescape(params[:title])}" if params[:title]
 		title
 	end
 end
@@ -105,13 +105,13 @@ end
 
 get '/:screen_name/:title/edit' do
 	@user = User.where(:screen_name => params[:screen_name]).first
-	@work = @user.works.where(:title => params[:title]).first
+	@work = @user.works.where(:title => CGI.unescape(params[:title])).first
 	haml :'/:screen_name/:title/edit'
 end
 
 get '/:screen_name/:title' do
 	@user = User.where(:screen_name => params[:screen_name]).first
-	@work = @user.works.where(:title => params[:title]).first
+	@work = @user.works.where(:title => CGI.unescape(params[:title])).first
 	haml :'/:screen_name/:title'
 end
 
@@ -132,12 +132,12 @@ post '/:screen_name' do
 	@user = User.where(:screen_name => params[:screen_name]).first
 	halt 403 if @user != current_user
 	attributes =  {
-		title: params[:title],
+		title: CGI.unescape(params[:title]),
 		description: params[:description],
 		links_text: params[:links_text],
 		date: params[:date]
 	}
-	if @work = current_user.works.where(:title => params[:old_title]).first
+	if params[:old_title] && (@work = current_user.works.where(:title => CGI.unescape(params[:old_title])).first)
 		@work.update_attributes(attributes)
 	else
 		@work = current_user.works.create(attributes)
