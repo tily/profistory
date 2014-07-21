@@ -249,8 +249,10 @@ end
 			done: function(result) {
 				console.log(result)
 				if(result[0].type == 'image') {
-					$(e).html($('<img src="' + result[0].url + '">'))			  
+					$(e).prev().remove()
+					$(e).html($('<img src="' + result[0].url + '">'))
 			 	} else if(result[0].media && result[0].media.html) {
+					$(e).prev().remove()
 					$(e).html(result[0].media.html)
 				} else {
 					if(result[0].favicon_url) {
