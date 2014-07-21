@@ -236,7 +236,7 @@ end
 		- links.each do |link|
 			%div.col-md-3{style:'padding-bottom:10px'}
 				%img.favicon{src:'/favicon.ico'}
-				%a{href:link}= link
+				%a{href:link,target:'_blank'}= link
 	- if i != @work.links.size - 1
 		%hr
 :javascript
