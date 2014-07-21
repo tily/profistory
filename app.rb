@@ -164,6 +164,13 @@ __END__
 			a,a:hover { color:blue }
 			img { max-width: 100% }
 			div { word-break: break-all }
+			img.favicon {
+				width: 1em;
+				height: 1em;
+				-webkit-filter: grayscale(100%);
+				filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
+				filter: gray;
+			}
 	%body
 		%div.container
 			%p{style:"padding-top:1em;padding-bottom:0em"}
@@ -228,6 +235,7 @@ end
 	%div.row
 		- links.each do |link|
 			%div.col-md-3{style:'padding-bottom:10px'}
+				%img.favicon{src:'/favicon.ico'}
 				%a{href:link}= link
 	- if i != @work.links.size - 1
 		%hr
@@ -245,6 +253,9 @@ end
 			 	} else if(result[0].media && result[0].media.html) {
 					$(e).html(result[0].media.html)
 				} else {
+					if(result[0].favicon_url) {
+						$(e).prev().attr('src', result[0].favicon_url)
+					}
 					if(result[0].title) {
 						$(e).html(result[0].title)
 					}
