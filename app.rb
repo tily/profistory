@@ -208,7 +208,7 @@ Create your portfolio with URLs
 %a{href:"/#{@user.screen_name}.json"} get json
 %div.row
 	- @years.each do |year|
-		%div.col-md-3
+		%div.col-md-4
 			%h2= year
 			%ul
 				- @works.each do |work|
