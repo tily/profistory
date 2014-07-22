@@ -199,7 +199,7 @@ Create your portfolio with URLs
 		%li
 			%a{href:"/#{work.user.screen_name}/#{CGI.escape(work.title)}"}= work.title
 			by
-			= work.user.screen_name
+			%a{href:"/#{work.user.screen_name}"}= work.user.screen_name
 @@ /:screen_name
 %h1= @user.screen_name
 - if @user == current_user
