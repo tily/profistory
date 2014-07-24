@@ -161,7 +161,7 @@ post '/:screen_name' do
 	if params[:old_title] && (@work = current_user.works.where(:title => CGI.unescape(params[:old_title])).first)
 		@work.update_attributes(attributes)
 	else
-		@work = current_user.works.create(attributes)
+		@work = @user.works.create(attributes)
 	end
 	if @work.save
 		redirect "http://#{request.env["HTTP_HOST"]}/#{current_user.screen_name}/#{CGI.escape(@work.title)}"
