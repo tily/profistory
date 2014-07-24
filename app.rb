@@ -158,13 +158,13 @@ post '/:screen_name' do
 		links_text: params[:links_text],
 		date: params[:date]
 	}
-	if params[:old_title] && (@work = current_user.works.where(:title => CGI.unescape(params[:old_title])).first)
+	if params[:old_title] && (@work = @user.works.where(:title => CGI.unescape(params[:old_title])).first)
 		@work.update_attributes(attributes)
 	else
 		@work = @user.works.create(attributes)
 	end
 	if @work.save
-		redirect "http://#{request.env["HTTP_HOST"]}/#{current_user.screen_name}/#{CGI.escape(@work.title)}"
+		redirect "http://#{request.env["HTTP_HOST"]}/#{@user.screen_name}/#{CGI.escape(@work.title)}"
 	else
 		haml :'/:screen_name/:title/edit'
 	end
