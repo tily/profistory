@@ -8,7 +8,7 @@ class User
 	field :uid, :type => String
 	field :provider, :type => String
 	field :allow_edition_to, :type => String
-	validates :allow_edition_to, :inclusion => {:in => ['none', 'nnade users', 'anyone']}
+	validates :allow_edition_to, :allow_nil => true, :inclusion => {:in => ['none', 'nnade users', 'anyone']}
 	has_many :works
 	def self.create_with_omniauth(auth)
 		create! do |account|
