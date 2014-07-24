@@ -7,6 +7,8 @@ class User
 	field :screen_name, :type => String
 	field :uid, :type => String
 	field :provider, :type => String
+	field :allow_edition_to, :type => String
+	validates :allow_edition_to, :inclusion => {:in => ['none', 'nnade users', 'anyone']}
 	has_many :works
 	def self.create_with_omniauth(auth)
 		create! do |account|
@@ -74,6 +76,14 @@ helpers do
 		title << " > #{CGI.unescape(params[:title])}" if params[:title]
 		title
 	end
+
+	def allowed_to_edit?(user)
+		case user.allow_edition_to
+		when 'anyone'; true
+		when 'users'; current_user
+		else; current_user == user
+		end
+	end
 end
 
 before do
@@ -103,6 +113,17 @@ get '/' do
 	haml :'/'
 end
 
+get '/:screen_name/settings/edit' do
+	haml :'/:screen_name/settings/edit'
+end
+
+post '/:screen_name/settings' do
+	current_user.update_attributes!(
+		allow_edition_to: CGI.unescape(params[:allow_edition_to])
+	)
+	redirect "http://#{request.env["HTTP_HOST"]}/#{current_user.screen_name}"
+end
+
 get '/:screen_name/:title/edit' do
 	@user = User.where(:screen_name => params[:screen_name]).first
 	@work = @user.works.where(:title => CGI.unescape(params[:title])).first
@@ -130,7 +151,7 @@ end
 
 post '/:screen_name' do
 	@user = User.where(:screen_name => params[:screen_name]).first
-	halt 403 if @user != current_user
+	halt 403 if !allowed_to_edit?(@user)
 	attributes =  {
 		title: CGI.unescape(params[:title]),
 		description: params[:description],
@@ -186,6 +207,8 @@ __END__
 					- if current_user
 						%a{href:"/#{current_user.screen_name}"} my page
 						&nbsp;|&nbsp;
+						%a{href:"/#{current_user.screen_name}/settings/edit"} settings
+						&nbsp;|&nbsp;
 						%a{href:'/logout'} logout
 					- else
 						%a{href:'/auth/twitter'} login
@@ -202,7 +225,7 @@ Create your portfolio with URLs
 			%a{href:"/#{work.user.screen_name}"}= work.user.screen_name
 @@ /:screen_name
 %h1= @user.screen_name
-- if @user == current_user
+- if allowed_to_edit?(@user)
 	%a{href:"/#{@user.screen_name}/*/edit"} add work
 	&nbsp;|&nbsp;
 %a{href:"/#{@user.screen_name}.json"} get json
@@ -223,7 +246,7 @@ json.array!(@user.works) do |work|
 	json.links work.links
 end
 @@ /:screen_name/:title
-- if @user == current_user
+- if allowed_to_edit?(@user)
 	%a{href:"/#{@user.screen_name}/#{CGI.escape(@work.title)}/edit"} edit work
 %p
 	%h1
@@ -296,3 +319,18 @@ end
 	%div.form-group
 		%div.col-sm-offset-2.col-sm-10
 			%button{type:'submit',class:'btn btn-default'}= @work ? 'update' : 'add'
+@@ /:screen_name/settings/edit
+%form.form-horizontal{role:'form',method:'POST',action:"/#{current_user.screen_name}/settings"}
+	%div.form-group
+		%label.col-sm-2.control-label{for:'allow_edition_to'} allow edition to
+		%div.col-sm-10
+			- ['none', 'nnade users', 'anyone'].each do |whom|
+				%div.radio
+					%label
+						- if current_user.allow_edition_to == whom
+							%input{name:'allow_edition_to',type:'radio',value:whom,checked:true}=whom
+						- else
+							%input{name:'allow_edition_to',type:'radio',value:whom}=whom
+	%div.form-group
+		%div.col-sm-offset-2.col-sm-10
+			%button{type:'submit',class:'btn btn-default'} update settings
