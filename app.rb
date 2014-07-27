@@ -138,7 +138,12 @@ end
 
 get '/:screen_name.json' do
 	content_type 'text/json'
-	@user = User.where(:screen_name => params[:screen_name]).first
+	if params[:screen_name] == '*'
+		@works = Work.desc(:date)
+		JSON.pretty_generate JSON.parse jbuilder :'/:screen_name.json', layout: false
+	else
+		@works = User.where(:screen_name => params[:screen_name]).first.works.desc(:date)
+	end
 	JSON.pretty_generate JSON.parse jbuilder :'/:screen_name.json', layout: false
 end
 
@@ -239,7 +244,7 @@ Create your portfolio with URLs
 						%li
 							%a{href:"/#{@user.screen_name}/#{CGI.escape(work.title)}",alt:work.description}= work.title
 @@ /:screen_name.json
-json.array!(@user.works) do |work|
+json.array!(@works) do |work|
 	json.title work.title
 	json.description work.description
 	json.date work.date
