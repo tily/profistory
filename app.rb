@@ -34,8 +34,8 @@ class Work
 		if links.flatten.any? {|link| !URI::regexp.match(link) }
 			work.errors.add(:link_text, "includes invalid URL(s)")
 		end
-		if links.flatten.size > 50
-			work.errors.add(:link_text, "includes more than 50 URLs")
+		if links.flatten.size > 100
+			work.errors.add(:link_text, "includes more than 100 URLs")
 		end
 	end
 	belongs_to :user
