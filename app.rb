@@ -8,7 +8,9 @@ class User
 	field :uid, :type => String
 	field :provider, :type => String
 	field :allow_edition_to, :type => String
+	field :tilt, :type => Integer
 	validates :allow_edition_to, :allow_nil => true, :inclusion => {:in => ['none', 'nnade users', 'anyone']}
+	validates :tilt, :allow_nil => true, :inclusion => {:in => (0..359)}
 	has_many :works
 	def self.create_with_omniauth(auth)
 		create! do |account|
@@ -119,7 +121,8 @@ end
 
 post '/:screen_name/settings' do
 	current_user.update_attributes!(
-		allow_edition_to: CGI.unescape(params[:allow_edition_to])
+		allow_edition_to: CGI.unescape(params[:allow_edition_to]),
+		tilt: params[:tilt]
 	)
 	redirect "http://#{request.env["HTTP_HOST"]}/#{current_user.screen_name}"
 end
@@ -197,6 +200,13 @@ __END__
 				filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
 				filter: gray;
 			}
+		- if @user.try('tilt')
+			:css
+				.tilt {
+					-ms-transform: rotate(#{@user.tilt}deg); /* IE 9 */
+					-webkit-transform: rotate(#{@user.tilt}deg); /* Chrome, Safari, Opera */
+					transform: rotate(#{@user.tilt}deg);
+				}
 	%body
 		%div.container
 			%p{style:"padding-top:1em;padding-bottom:0em"}
@@ -229,12 +239,13 @@ Create your portfolio with URLs
 			by
 			%a{href:"/#{work.user.screen_name}"}= work.user.screen_name
 @@ /:screen_name
-%h1= @user.screen_name
-- if allowed_to_edit?(@user)
-	%a{href:"/#{@user.screen_name}/*/edit"} add work
-	&nbsp;|&nbsp;
-%a{href:"/#{@user.screen_name}.json"} get json
-%div.row
+%div.tilt
+	%h1= @user.screen_name
+	- if allowed_to_edit?(@user)
+		%a{href:"/#{@user.screen_name}/*/edit"} add work
+		&nbsp;|&nbsp;
+	%a{href:"/#{@user.screen_name}.json"} get json
+%div.row.tilt
 	- @years.each do |year|
 		%div.col-md-4
 			%h2= year
@@ -253,14 +264,14 @@ end
 @@ /:screen_name/:title
 - if allowed_to_edit?(@user)
 	%a{href:"/#{@user.screen_name}/#{CGI.escape(@work.title)}/edit"} edit work
-%p
+%div.tilt
 	%h1
 		= @work.title
 		%small
 			= @work.description
 	%p= "#{@work.date.strftime('%Y-%m-%d')}"
 - @work.links.each_with_index do |links, i|
-	%div.row
+	%div.row.tilt
 		- links.each do |link|
 			%div.col-md-3{style:'padding-bottom:10px'}
 				%img.favicon{src:'/favicon.ico'}
@@ -336,6 +347,10 @@ end
 							%input{name:'allow_edition_to',type:'radio',value:whom,checked:true}=whom
 						- else
 							%input{name:'allow_edition_to',type:'radio',value:whom}=whom
+	%div.form-group
+		%label.col-sm-2.control-label{for:'tilt'} tilt (0-360)
+		%div.col-sm-10
+			%input.form-control{name:'tilt',type:'number',value:current_user.tilt || 0}
 	%div.form-group
 		%div.col-sm-offset-2.col-sm-10
 			%button{type:'submit',class:'btn btn-default'} update settings
