@@ -56,7 +56,7 @@ configure do
 		provider :twitter, ENV['CONSUMER_KEY'], ENV['CONSUMER_SECRET']
 	end
 
-	uri = URI.parse(ENV['MONGOHQ_URL'] || 'mongodb://localhost:27017/nnade_development')
+	uri = URI.parse(ENV['MONGOHQ_URL'] || 'mongodb://db:27017/nnade_development')
 	db = uri.path.gsub(/^\//, '')
 	connection = Mongo::Connection.new(uri.host, uri.port)
 	connection.db(db).authenticate(uri.user, uri.password) unless (uri.user.nil? || uri.password.nil?)
