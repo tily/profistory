@@ -1,0 +1,11 @@
+version: "2"
+services:
+    app:
+      build: .
+      volumes:
+        - .:/usr/local/app
+      command: rackup -p 8082
+      ports:
+        - 8082:8082
+    db:
+      image: mongo
