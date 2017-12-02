@@ -56,11 +56,7 @@ configure do
 		provider :twitter, ENV['CONSUMER_KEY'], ENV['CONSUMER_SECRET']
 	end
 
-	uri = URI.parse(ENV['MONGOHQ_URL'] || 'mongodb://db:27017/nnade_development')
-	db = uri.path.gsub(/^\//, '')
-	connection = Mongo::Connection.new(uri.host, uri.port)
-	connection.db(db).authenticate(uri.user, uri.password) unless (uri.user.nil? || uri.password.nil?)
-	use Rack::Session::Mongo, :connection => connection, :db => db, :expire_after => 60*60*24*7 # 1 week
+	use Rack::Session::Moneta, store: Moneta.new(:Mongo, host: "db")
 
 	Mongoid.load!("./mongoid.yml")
 
