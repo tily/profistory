@@ -1,0 +1,18 @@
+%form.form-horizontal{role:'form',method:'POST',action:"/#{current_user.screen_name}/settings"}
+	%div.form-group
+		%label.col-sm-2.control-label{for:'allow_edition_to'} allow edition to
+		%div.col-sm-10
+			- ['none', 'nnade users', 'anyone'].each do |whom|
+				%div.radio
+					%label
+						- if current_user.allow_edition_to == whom
+							%input{name:'allow_edition_to',type:'radio',value:whom,checked:true}=whom
+						- else
+							%input{name:'allow_edition_to',type:'radio',value:whom}=whom
+	%div.form-group
+		%label.col-sm-2.control-label{for:'tilt'} tilt (0-360)
+		%div.col-sm-10
+			%input.form-control{name:'tilt',type:'number',value:current_user.tilt || 0}
+	%div.form-group
+		%div.col-sm-offset-2.col-sm-10
+			%button{type:'submit',class:'btn btn-default'} update settings
