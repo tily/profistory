@@ -1,50 +1,7 @@
 # coding: utf-8
 Bundler.require
-
-class User
-	include Mongoid::Document
-	include Mongoid::Timestamps
-	field :screen_name, :type => String
-	field :uid, :type => String
-	field :provider, :type => String
-	field :allow_edition_to, :type => String
-	field :tilt, :type => Integer
-	validates :allow_edition_to, :allow_nil => true, :inclusion => {:in => ['none', 'nnade users', 'anyone']}
-	validates :tilt, :allow_nil => true, :inclusion => {:in => (0..359)}
-	has_many :works
-	def self.create_with_omniauth(auth)
-		create! do |account|
-			account.provider = auth["provider"]
-			account.uid = auth["uid"]
-			account.screen_name = auth["info"]["nickname"]
-		end
-	end
-end
-
-class Work
-	include Mongoid::Document
-	include Mongoid::Timestamps
-	field :title, type: String
-	field :description, type: String
-	field :links_text, type: String
-	field :date, type: Time
-	validates :title, :length => {:maximum => 35}
-	validates :description, :length => {:maximum => 140}
-	validates :title, :presence => true
-	validates :links_text, :presence => true
-	validate do |work|
-		if links.flatten.any? {|link| !URI::regexp.match(link) }
-			work.errors.add(:link_text, "includes invalid URL(s)")
-		end
-		if links.flatten.size > 100
-			work.errors.add(:link_text, "includes more than 100 URLs")
-		end
-	end
-	belongs_to :user
-	def links
-		links_text.gsub(/\r/, '').split(/\n{2,}/).map {|x| x.split("\n") }
-	end
-end
+require_relative './models/user'
+require_relative './models/work'
 
 configure do
 	enable :sessions
