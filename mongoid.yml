@@ -3,7 +3,7 @@ development:
     default:
       database: mongoid
       hosts:
-        - localhost:27017
+        - db:27017
 production:
   sessions:
     default:
