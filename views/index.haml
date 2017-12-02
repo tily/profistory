@@ -1,0 +1,8 @@
+Create your portfolio with URLs
+%h2 recent works
+%ul
+	- @works.each do |work|
+		%li
+			%a{href:"/#{work.user.screen_name}/#{CGI.escape(work.title)}"}= work.title
+			by
+			%a{href:"/#{work.user.screen_name}"}= work.user.screen_name
