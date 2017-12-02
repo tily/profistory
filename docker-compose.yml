@@ -7,5 +7,7 @@ services:
       command: rackup -p 8082 -o 0.0.0.0
       ports:
         - 8082:8082
+      depends_on:
+        - db
     db:
       image: mongo
