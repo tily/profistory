@@ -1,4 +1,4 @@
-FROM ruby:1.9.3
+FROM ruby:2.4.2
 ENV WORKDIR /usr/local/app
 ADD . $WORKDIR
 WORKDIR $WORKDIR
