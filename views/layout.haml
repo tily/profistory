@@ -29,7 +29,7 @@
 		%div.container
 			%p{style:"padding-top:1em;padding-bottom:0em"}
 				%strong
-					%a{href:'/'}= TITLE
+					%a{href:'/'}= Settings.title
 					- if @user
 						&nbsp;>&nbsp;
 						%a{href:"/#{@user.screen_name}"} #{@user.screen_name}

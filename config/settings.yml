@@ -1,0 +1,8 @@
+title: n n a d e
+session:
+  secret: "Your session secret here"
+twitter:
+  consumer_key: "Your twitter consumer key here"
+  consumer_secret: "Your twitter consumer secret here"
+embedly:
+  api_key: "Your embedly API key here"
