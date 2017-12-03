@@ -4,20 +4,16 @@ require_relative './models/user'
 require_relative './models/work'
 
 configure do
+	register Config
 	enable :sessions
-	set :session_secret, ENV['SESSION_SECRET']
+	set :session_secret, Settings.session.secret
 	set :haml, ugly: true, escape_html: true
 	set :protection, :except => :path_traversal
-
 	use OmniAuth::Builder do
-		provider :twitter, ENV['CONSUMER_KEY'], ENV['CONSUMER_SECRET']
+		provider :twitter, Settings.twitter.consumer_key, Settings.twitter.consumer_secret
 	end
-
 	use Rack::Session::Moneta, store: Moneta.new(:Mongo, host: "db")
-
-	Mongoid.load!("./mongoid.yml")
-
-	TITLE = 'nnade'.split('').join(' ')
+	Mongoid.load!("config/mongoid.yml")
 end
 
 helpers do
@@ -26,7 +22,7 @@ helpers do
 	end
 
 	def title
-		title = TITLE.dup
+		title = Settings.title.dup
 		title << " > #{params[:screen_name]}" if params[:screen_name]
 		title << " > #{CGI.unescape(params[:title])}" if params[:title]
 		title
