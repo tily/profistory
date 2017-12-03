@@ -1,4 +1,3 @@
-# coding: utf-8
 Bundler.require
 require_relative './models/user'
 require_relative './models/work'
@@ -51,9 +50,6 @@ before do
 	pass if request.path_info =~ /^\/auth\//
 end
 
-after do
-end
-
 case Settings.auth.provider
 when "twitter"
 	get '/auth/twitter/callback' do
@@ -69,9 +65,6 @@ when "saml"
 		session[:uid] = auth["uid"]
 		redirect "http://#{request.env["HTTP_HOST"]}/#{current_user.screen_name}"
 	end
-end
-
-get '/auth/failure' do
 end
 
 get '/logout' do
