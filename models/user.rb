@@ -13,7 +13,12 @@ class User
 		create! do |account|
 			account.provider = auth["provider"]
 			account.uid = auth["uid"]
-			account.screen_name = auth["info"]["nickname"]
+			account.screen_name = case Settings.auth.provider
+			when "twitter"
+				auth["info"]["nickname"]
+			when "saml"
+				auth["uid"]
+			end
 		end
 	end
 end
