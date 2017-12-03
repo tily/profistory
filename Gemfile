@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 gem 'sinatra'
 gem 'omniauth-twitter'
+gem 'omniauth-saml'
 gem 'mongo'
 gem 'mongoid'
 gem 'moneta', require: 'rack/session/moneta'

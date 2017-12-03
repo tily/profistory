@@ -1,8 +1,16 @@
 title: n n a d e
 session:
   secret: "Your session secret here"
-twitter:
-  consumer_key: "Your twitter consumer key here"
-  consumer_secret: "Your twitter consumer secret here"
+auth:
+  provider: saml
+  twitter:
+    consumer_key: "Your twitter consumer key here"
+    consumer_secret: "Your twitter consumer secret here"
+  saml:
+    assertion_consumer_service_url: "http://localhost:8082/auth/saml/callback"
+    issuer: "{audience}"
+    idp_sso_target_url: "Your IDP SSO target URL here"
+    idp_cert_fingerprint: "Your IDP cert fingerprint here"
+    name_identifier_format: "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress"
 embedly:
   api_key: "Your embedly API key here"
