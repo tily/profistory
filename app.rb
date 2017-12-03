@@ -96,7 +96,7 @@ get '/:screen_name.json' do
 	content_type 'text/json'
 	if params[:screen_name] == '*'
 		@works = Work.desc(:date)
-		JSON.pretty_generate JSON.parse jbuilder :'/:screen_name.json', layout: false
+		JSON.pretty_generate JSON.parse jbuilder :user, layout: false
 	else
 		@works = User.where(:screen_name => params[:screen_name]).first.works.desc(:date)
 	end
