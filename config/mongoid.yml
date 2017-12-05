@@ -1,7 +1,7 @@
 development:
   clients:
     default:
-      database: mongoid
+      database: nnade_development
       hosts:
         - db:27017
 production:
