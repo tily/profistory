@@ -32,7 +32,7 @@ helpers do
 
 	def title
 		title = Settings.title.dup
-		title << " > #{params[:screen_name]}" if params[:screen_name]
+		title << " > #{params[:user_name]}" if params[:user_name]
 		title << " > #{CGI.unescape(params[:title])}" if params[:title]
 		title
 	end
@@ -56,14 +56,14 @@ when "twitter"
 		auth = request.env["omniauth.auth"]
 		User.where(:provider => auth["provider"], :uid => auth["uid"]).first || User.create_with_omniauth(auth)
 		session[:uid] = auth["uid"]
-		redirect "http://#{request.env["HTTP_HOST"]}/#{current_user.screen_name}"
+		redirect "http://#{request.env["HTTP_HOST"]}/#{current_user.name}"
 	end
 when "saml"
-	post "/auth/:provider/callback" do
+	post "/auth/saml/callback" do
 		auth = env['omniauth.auth']
 		User.where(:provider => auth["provider"], :uid => auth["uid"]).first || User.create_with_omniauth(auth)
 		session[:uid] = auth["uid"]
-		redirect "http://#{request.env["HTTP_HOST"]}/#{current_user.screen_name}"
+		redirect "http://#{request.env["HTTP_HOST"]}/#{current_user.name}"
 	end
 end
 
@@ -77,50 +77,50 @@ get '/' do
 	haml :index
 end
 
-get '/:screen_name/settings/edit' do
+get '/:user_name/settings/edit' do
 	haml :edit_user
 end
 
-post '/:screen_name/settings' do
+post '/:user_name/settings' do
 	current_user.update_attributes!(
 		allow_edition_to: CGI.unescape(params[:allow_edition_to]),
 		tilt: params[:tilt]
 	)
-	redirect "http://#{request.env["HTTP_HOST"]}/#{current_user.screen_name}"
+	redirect "http://#{request.env["HTTP_HOST"]}/#{current_user.name}"
 end
 
-get '/:screen_name/:title/edit' do
-	@user = User.where(:screen_name => params[:screen_name]).first
+get '/:user_name/:title/edit' do
+	@user = User.where(:name => params[:user_name]).first
 	@work = @user.works.where(:title => CGI.unescape(params[:title])).first
 	haml :edit_work
 end
 
-get '/:screen_name/:title' do
-	@user = User.where(:screen_name => params[:screen_name]).first
+get '/:user_name/:title' do
+	@user = User.where(:name => params[:user_name]).first
 	@work = @user.works.where(:title => CGI.unescape(params[:title])).first
 	haml :work
 end
 
-get '/:screen_name.json' do
+get '/:user_name.json' do
 	content_type 'text/json'
-	if params[:screen_name] == '*'
+	if params[:user_name] == '*'
 		@works = Work.desc(:date)
 		JSON.pretty_generate JSON.parse jbuilder :user, layout: false
 	else
-		@works = User.where(:screen_name => params[:screen_name]).first.works.desc(:date)
+		@works = User.where(:name => params[:user_name]).first.works.desc(:date)
 	end
 	JSON.pretty_generate JSON.parse jbuilder :user, layout: false
 end
 
-get '/:screen_name' do
-	@user = User.where(:screen_name => params[:screen_name]).first
+get '/:user_name' do
+	@user = User.where(:name => params[:user_name]).first
 	@works = @user.works.desc(:date)
 	@years = @user.works.map {|work| work.date.year }.uniq.sort.reverse
 	haml :user
 end
 
-post '/:screen_name' do
-	@user = User.where(:screen_name => params[:screen_name]).first
+post '/:user_name' do
+	@user = User.where(:name => params[:user_name]).first
 	halt 403 if !allowed_to_edit?(@user)
 	attributes =  {
 		title: CGI.unescape(params[:title]),
@@ -134,7 +134,7 @@ post '/:screen_name' do
 		@work = @user.works.create(attributes)
 	end
 	if @work.save
-		redirect "http://#{request.env["HTTP_HOST"]}/#{@user.screen_name}/#{CGI.escape(@work.title)}"
+		redirect "http://#{request.env["HTTP_HOST"]}/#{@user.name}/#{CGI.escape(@work.title)}"
 	else
 		haml :work
 	end

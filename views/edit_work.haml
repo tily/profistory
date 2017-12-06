@@ -3,7 +3,7 @@
 		%ul
 			- @work.errors.each do |field, message|
 				%li= "#{field} #{message}"
-%form.form-horizontal{role:'form',method:'POST',action:"/#{@user.screen_name}"}
+%form.form-horizontal{role:'form',method:'POST',action:"/#{@user.name}"}
 	- if @work
 		%input.form-control{name:'old_title',type:'hidden',value:@work.title}
 	%div.form-group

@@ -1,8 +1,9 @@
 class User
 	include Mongoid::Document
 	include Mongoid::Timestamps
-	field :screen_name, :type => String
 	field :uid, :type => String
+	field :name, :type => String
+	field :screen_name, :type => String
 	field :provider, :type => String
 	field :allow_edition_to, :type => String
 	field :tilt, :type => Integer
@@ -13,11 +14,16 @@ class User
 		create! do |account|
 			account.provider = auth["provider"]
 			account.uid = auth["uid"]
-			account.screen_name = case Settings.auth.provider
+			case Settings.auth.provider
 			when "twitter"
-				auth["info"]["nickname"]
+				account.name = auth.info.nickname
+				account.screen_name = auth.info.nickname
 			when "saml"
-				auth["uid"]
+				account.name = auth.uid
+				raw_info = auth.extra.raw_info
+				last_name = raw_info["User.LastName"]
+				first_name = raw_info["User.FirstName"]
+				account.screen_name = [last_name, first_name].join(" ")
 			end
 		end
 	end

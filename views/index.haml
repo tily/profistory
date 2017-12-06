@@ -3,6 +3,6 @@ Create your portfolio with URLs
 %ul
 	- @works.each do |work|
 		%li
-			%a{href:"/#{work.user.screen_name}/#{CGI.escape(work.title)}"}= work.title
+			%a{href:"/#{work.user.name}/#{CGI.escape(work.title)}"}= work.title
 			by
-			%a{href:"/#{work.user.screen_name}"}= work.user.screen_name
+			%a{href:"/#{work.user.name}"}= work.user.screen_name
