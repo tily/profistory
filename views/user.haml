@@ -1,15 +1,15 @@
 %div.tilt
-	%h1= @user.screen_name
-	- if allowed_to_edit?(@user)
-		%a{href:"/#{@user.name}/*/edit"} add work
-		&nbsp;|&nbsp;
-	%a{href:"/#{@user.name}.json"} get json
+  %h1= @user.screen_name
+  - if allowed_to_edit?(@user)
+    %a{href:"/#{@user.name}/*/edit"} add work
+    &nbsp;|&nbsp;
+  %a{href:"/#{@user.name}.json"} get json
 %div.row.tilt
-	- @years.each do |year|
-		%div.col-md-4
-			%h2= year
-			%ul
-				- @works.each do |work|
-					- if work.date.year == year
-						%li
-							%a{href:"/#{@user.name}/#{CGI.escape(work.title)}",alt:work.description}= work.title
+  - @years.each do |year|
+    %div.col-md-4
+      %h2= year
+      %ul
+        - @works.each do |work|
+          - if work.date.year == year
+            %li
+              %a{href:"/#{@user.name}/#{CGI.escape(work.title)}",alt:work.description}= work.title
