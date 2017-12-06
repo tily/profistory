@@ -52,10 +52,10 @@ end
 
 [:get, :post].each do |method|
   send(method, '/auth/:provider/callback') do
-      auth = request.env["omniauth.auth"]
-      User.where(:provider => auth["provider"], :uid => auth["uid"]).first || User.create_with_omniauth(auth)
-      session[:uid] = auth["uid"]
-      redirect "http://#{request.env["HTTP_HOST"]}/#{current_user.name}"
+    auth = request.env["omniauth.auth"]
+    User.where(:provider => auth["provider"], :uid => auth["uid"]).first || User.create_with_omniauth(auth)
+    session[:uid] = auth["uid"]
+    redirect "http://#{request.env["HTTP_HOST"]}/#{current_user.name}"
   end
 end
 
