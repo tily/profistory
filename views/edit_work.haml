@@ -1,29 +1,29 @@
 - if @work && !@work.errors.empty?
-	.alert.alert-danger
-		%ul
-			- @work.errors.each do |field, message|
-				%li= "#{field} #{message}"
+  .alert.alert-danger
+    %ul
+      - @work.errors.each do |field, message|
+        %li= "#{field} #{message}"
 %form.form-horizontal{role:'form',method:'POST',action:"/#{@user.name}"}
-	- if @work
-		%input.form-control{name:'old_title',type:'hidden',value:@work.title}
-	%div.form-group
-		%label.col-sm-2.control-label{for:'date'} date
-		%div.col-sm-2
-			%input.form-control{name:'date',type:'text',value:(@work.try(:date)||Time.now).strftime('%Y/%m/%d')}
-	%div.form-group
-		%label.col-sm-2.control-label{for:'title'} title
-		%div.col-sm-5
-			%input.form-control{name:'title',type:'text',value:@work.try(:title)}
-	%div.form-group
-		%label.col-sm-2.control-label{for:'description'} description
-		%div.col-sm-10
-			%input.form-control{name:'description',type:'text',value:@work.try(:description)}
-	%div.form-group
-		%label.col-sm-2.control-label{for:'links'} links
-		%div.col-sm-10
-			%span.help-block one url per one line, insert empty lines to group your links
-			%textarea.form-control{name:'links_text',rows:'25',style:'height: 1000'}
-				= @work.try(:links_text)
-	%div.form-group
-		%div.col-sm-offset-2.col-sm-10
-			%button{type:'submit',class:'btn btn-default'}= @work ? 'update' : 'add'
+  - if @work
+    %input.form-control{name:'old_title',type:'hidden',value:@work.title}
+  %div.form-group
+    %label.col-sm-2.control-label{for:'date'} date
+    %div.col-sm-2
+      %input.form-control{name:'date',type:'text',value:(@work.try(:date)||Time.now).strftime('%Y/%m/%d')}
+  %div.form-group
+    %label.col-sm-2.control-label{for:'title'} title
+    %div.col-sm-5
+      %input.form-control{name:'title',type:'text',value:@work.try(:title)}
+  %div.form-group
+    %label.col-sm-2.control-label{for:'description'} description
+    %div.col-sm-10
+      %input.form-control{name:'description',type:'text',value:@work.try(:description)}
+  %div.form-group
+    %label.col-sm-2.control-label{for:'links'} links
+    %div.col-sm-10
+      %span.help-block one url per one line, insert empty lines to group your links
+      %textarea.form-control{name:'links_text',rows:'25',style:'height: 1000'}
+        = @work.try(:links_text)
+  %div.form-group
+    %div.col-sm-offset-2.col-sm-10
+      %button{type:'submit',class:'btn btn-default'}= @work ? 'update' : 'add'
