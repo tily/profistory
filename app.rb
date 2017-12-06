@@ -50,20 +50,12 @@ before do
   pass if request.path_info =~ /^\/auth\//
 end
 
-case Settings.auth.provider
-when "twitter"
-  get '/auth/twitter/callback' do
-    auth = request.env["omniauth.auth"]
-    User.where(:provider => auth["provider"], :uid => auth["uid"]).first || User.create_with_omniauth(auth)
-    session[:uid] = auth["uid"]
-    redirect "http://#{request.env["HTTP_HOST"]}/#{current_user.name}"
-  end
-when "saml"
-  post "/auth/saml/callback" do
-    auth = env['omniauth.auth']
-    User.where(:provider => auth["provider"], :uid => auth["uid"]).first || User.create_with_omniauth(auth)
-    session[:uid] = auth["uid"]
-    redirect "http://#{request.env["HTTP_HOST"]}/#{current_user.name}"
+[:get, :post].each do |method|
+  send(method, '/auth/:provider/callback') do
+      auth = request.env["omniauth.auth"]
+      User.where(:provider => auth["provider"], :uid => auth["uid"]).first || User.create_with_omniauth(auth)
+      session[:uid] = auth["uid"]
+      redirect "http://#{request.env["HTTP_HOST"]}/#{current_user.name}"
   end
 end
 
