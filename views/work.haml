@@ -1,5 +1,5 @@
 - if allowed_to_edit?(@user)
-	%a{href:"/#{@user.screen_name}/#{CGI.escape(@work.title)}/edit"} edit work
+	%a{href:"/#{@user.name}/#{CGI.escape(@work.title)}/edit"} edit work
 %div.tilt
 	%h1
 		= @work.title
