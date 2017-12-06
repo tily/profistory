@@ -32,15 +32,15 @@
 					%a{href:'/'}= Settings.title
 					- if @user
 						&nbsp;>&nbsp;
-						%a{href:"/#{@user.screen_name}"} #{@user.screen_name}
+						%a{href:"/#{@user.name}"} #{@user.screen_name}
 					- if @work
 						&nbsp;>&nbsp;
 						= @work.title
 				%span{style:'float:right'}
 					- if current_user
-						%a{href:"/#{current_user.screen_name}"} my page
+						%a{href:"/#{current_user.name}"} my page
 						&nbsp;|&nbsp;
-						%a{href:"/#{current_user.screen_name}/settings/edit"} settings
+						%a{href:"/#{current_user.name}/settings/edit"} settings
 						&nbsp;|&nbsp;
 						%a{href:'/logout'} logout
 					- else
