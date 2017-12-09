@@ -21,14 +21,14 @@ class User
   end
 
   def update_with_omniauth(auth)
-    names = extract_names_from_omniauth(auth)
+    names = self.class.extract_names_from_omniauth(auth)
     update_attributes!(
       name: names[:name],
       screen_name: names[:screen_name],
     )
   end
 
-  def extract_names_from_omniauth(auth)
+  def self.extract_names_from_omniauth(auth)
     case Settings.auth.provider
     when "twitter"
       name = auth.info.nickname
