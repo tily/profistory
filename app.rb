@@ -79,7 +79,7 @@ namespace '/works' do
     haml :work
   end
 
-  post '/' do
+  post do
     attributes =  {
       title: CGI.unescape(params[:title]),
       tag_list: params[:tags],
