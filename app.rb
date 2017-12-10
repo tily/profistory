@@ -98,6 +98,11 @@ namespace '/works' do
       haml :work
     end
   end
+
+  get do
+    @works = Work.page(params[:page])
+    haml :list_works
+  end
 end
 
 namespace '/users' do
@@ -117,5 +122,10 @@ namespace '/users' do
     @works = @user.works.desc(:date)
     @years = @user.works.map {|work| work.date.year }.uniq.sort.reverse
     haml :user
+  end
+
+  get do
+    @users = User.page(params[:page])
+    haml :list_users
   end
 end

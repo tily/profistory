@@ -1,0 +1,5 @@
+%h2 Works
+%ul
+  - @works.each do |work|
+    %li
+      %a{href:to("works/#{CGI.escape(work.title)}")}= work.title
