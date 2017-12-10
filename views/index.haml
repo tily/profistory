@@ -4,12 +4,12 @@
     %ul
       - @works.each do |work|
         %li
-          %a{href:to("#{work.user.name}/#{CGI.escape(work.title)}")}= work.title
+          %a{href:to("works/#{CGI.escape(work.title)}")}= work.title
           by
-          %a{href:to(work.user.name)}= work.user.screen_name
+          %a{href:to("users/#{work.user.name}")}= work.user.screen_name
   %div.col-md-4
     %h2 Users
     %ul
       - @users.each do |user|
         %li
-          %a{href:to(user.name)}= user.screen_name
+          %a{href:to("users/#{user.name}")}= user.screen_name

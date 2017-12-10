@@ -30,15 +30,15 @@
           %a{href:to('/')}= Settings.title
           - if @user
             &nbsp;>&nbsp;
-            %a{href:to(@user.name)} #{@user.screen_name}
+            %a{href:to("users/#{@user.name}")} #{@user.screen_name}
           - if @work
             &nbsp;>&nbsp;
             = @work.title
         %span{style:'float:right'}
           - if current_user
-            %a{href:to(current_user.name)} my page
+            %a{href:to("users/#{current_user.name}")} my page
             &nbsp;|&nbsp;
-            %a{href:to("#{current_user.name}/settings/edit")} settings
+            %a{href:to("settings/edit")} settings
             &nbsp;|&nbsp;
             %a{href:to('logout')} logout
           - else
