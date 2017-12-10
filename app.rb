@@ -82,7 +82,8 @@ end
 post '/:user_name/settings' do
   current_user.update_attributes!(
     allow_edition_to: CGI.unescape(params[:allow_edition_to]),
-    tilt: params[:tilt]
+    tilt: params[:tilt],
+    tag_list: params[:tags]
   )
   redirect to(current_user.name)
 end
@@ -122,6 +123,7 @@ post '/:user_name' do
   halt 403 if !allowed_to_edit?(@user)
   attributes =  {
     title: CGI.unescape(params[:title]),
+    tag_list: params[:tags],
     description: params[:description],
     links_text: params[:links_text],
     date: params[:date]

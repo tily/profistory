@@ -1,6 +1,7 @@
 class Work
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::Document::Taggable
   field :title, type: String
   field :description, type: String
   field :links_text, type: String
