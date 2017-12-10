@@ -1,5 +1,8 @@
 %div.tilt
   %h1= @user.screen_name
+  %p
+    %strong tags:
+    = @user.tags.join(", ")
   - if allowed_to_edit?(@user)
     %a{href:to("#{@user.name}/*/edit")} add work
     &nbsp;|&nbsp;
