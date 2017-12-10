@@ -38,7 +38,7 @@ end
       User.create_with_omniauth(auth)
     end
     session[:uid] = auth["uid"]
-    redirect to(current_user.name)
+    redirect to("users/#{current_user.name}")
   end
 end
 
@@ -64,7 +64,7 @@ namespace '/settings' do
       tilt: params[:tilt],
       tag_list: params[:tags]
     )
-    redirect to(current_user.name)
+    redirect to("users/#{current_user.name}")
   end
 end
 
