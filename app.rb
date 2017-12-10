@@ -75,11 +75,11 @@ get '/' do
   haml :index
 end
 
-get '/:user_name/settings/edit' do
+get '/settings/edit' do
   haml :edit_user
 end
 
-post '/:user_name/settings' do
+post '/settings' do
   current_user.update_attributes!(
     allow_edition_to: CGI.unescape(params[:allow_edition_to]),
     tilt: params[:tilt],
@@ -88,19 +88,17 @@ post '/:user_name/settings' do
   redirect to(current_user.name)
 end
 
-get '/:user_name/:title/edit' do
-  @user = User.where(:name => params[:user_name]).first
-  @work = @user.works.where(:title => CGI.unescape(params[:title])).first
+get '/works/:title/edit' do
+  @work = Work.where(:title => CGI.unescape(params[:title])).first
   haml :edit_work
 end
 
-get '/:user_name/:title' do
-  @user = User.where(:name => params[:user_name]).first
-  @work = @user.works.where(:title => CGI.unescape(params[:title])).first
+get '/works/:title' do
+  @work = Work.where(:title => CGI.unescape(params[:title])).first
   haml :work
 end
 
-get '/:user_name.json' do
+get '/users/:user_name.json' do
   content_type 'text/json'
   if params[:user_name] == '*'
     @works = Work.desc(:date)
@@ -111,16 +109,14 @@ get '/:user_name.json' do
   JSON.pretty_generate JSON.parse jbuilder :user, layout: false
 end
 
-get '/:user_name' do
+get '/users/:user_name' do
   @user = User.where(:name => params[:user_name]).first
   @works = @user.works.desc(:date)
   @years = @user.works.map {|work| work.date.year }.uniq.sort.reverse
   haml :user
 end
 
-post '/:user_name' do
-  @user = User.where(:name => params[:user_name]).first
-  halt 403 if !allowed_to_edit?(@user)
+post '/works' do
   attributes =  {
     title: CGI.unescape(params[:title]),
     tag_list: params[:tags],
@@ -128,13 +124,13 @@ post '/:user_name' do
     links_text: params[:links_text],
     date: params[:date]
   }
-  if params[:old_title] && (@work = @user.works.where(:title => CGI.unescape(params[:old_title])).first)
+  if params[:old_title] && (@work = current_user.works.where(:title => CGI.unescape(params[:old_title])).first)
     @work.update_attributes(attributes)
   else
-    @work = @user.works.create(attributes)
+    @work = current_user.works.create(attributes)
   end
   if @work.save
-    redirect to("#{@user.name}/#{@work.title}")
+    redirect to("works/#{@work.title}")
   else
     haml :work
   end
