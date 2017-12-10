@@ -2,7 +2,8 @@
   %h1= @user.screen_name
   %p
     %strong tags:
-    = @user.tags.join(", ")
+    - @user.tags.each do |tag|
+      %a{href:to("tags/#{tag}")}= tag
   - if allowed_to_edit?(@user)
     %a{href:to("works/*/edit")} add work
     &nbsp;|&nbsp;
