@@ -7,7 +7,9 @@
       = @work.description
   %p
     %strong tags:
-    = @work.tags.join(", ")
+    - @work.tags.each do |tag|
+      %span.glyphicon.glyphicon-tag
+      %a{href:to("tags/#{tag}")}= tag
   %p= "#{@work.date.strftime('%Y-%m-%d')}"
 - @work.links.each_with_index do |links, i|
   %div.row.tilt

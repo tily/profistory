@@ -17,7 +17,7 @@
   %div.form-group
     %label.col-sm-2.control-label{for:'tags'} tags (separate with comma)
     %div.col-sm-10
-      %input.form-control{name:'tags',type:'text',value:current_user.tags.join(", ")}
+      %input.form-control{name:'tags',type:'text',value:@work ? @work.tags.join(", ") : ""}
   %div.form-group
     %label.col-sm-2.control-label{for:'description'} description
     %div.col-sm-10
