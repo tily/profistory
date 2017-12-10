@@ -15,6 +15,10 @@
     %div.col-sm-5
       %input.form-control{name:'title',type:'text',value:@work.try(:title)}
   %div.form-group
+    %label.col-sm-2.control-label{for:'tags'} tags (separate with comma)
+    %div.col-sm-10
+      %input.form-control{name:'tags',type:'text',value:current_user.tags.join(", ")}
+  %div.form-group
     %label.col-sm-2.control-label{for:'description'} description
     %div.col-sm-10
       %input.form-control{name:'description',type:'text',value:@work.try(:description)}
