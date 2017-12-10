@@ -4,9 +4,9 @@
     %strong tags:
     = @user.tags.join(", ")
   - if allowed_to_edit?(@user)
-    %a{href:to("#{@user.name}/*/edit")} add work
+    %a{href:to("works/*/edit")} add work
     &nbsp;|&nbsp;
-  %a{href:to("#{@user.name}.json")} get json
+  %a{href:to("users/#{@user.name}.json")} get json
 %div.row.tilt
   - @years.each do |year|
     %div.col-md-4
@@ -16,4 +16,4 @@
           - if work.date.year == year
             %li
               #{work.date.strftime("%m/%d")}
-              %a{href:to("#{@user.name}/#{CGI.escape(work.title)}"),alt:work.description}= work.title
+              %a{href:to("works/#{CGI.escape(work.title)}"),alt:work.description}= work.title
