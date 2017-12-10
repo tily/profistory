@@ -15,8 +15,9 @@
           %a{href:to("users/#{user.name}")}= user.screen_name
   %div.col-md-4
     %h2 Tags
-    %ul
+    %ul.list-group
       - @tags.each do |tag|
-        %li
+        %li.list-group-item
+          %span.glyphicon.glyphicon-tag
           %a{href:to("tags/#{tag[:name]}")} #{tag[:name]}
-          (#{tag[:count]})
+          %span.badge #{tag[:count]}
