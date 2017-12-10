@@ -60,13 +60,13 @@ end
       User.create_with_omniauth(auth)
     end
     session[:uid] = auth["uid"]
-    redirect "http://#{request.env["HTTP_HOST"]}/#{current_user.name}"
+    redirect to(current_user.name)
   end
 end
 
 get '/logout' do
   session[:uid] = nil
-  redirect '/'
+  redirect to('/')
 end
 
 get '/' do
@@ -83,7 +83,7 @@ post '/:user_name/settings' do
     allow_edition_to: CGI.unescape(params[:allow_edition_to]),
     tilt: params[:tilt]
   )
-  redirect "http://#{request.env["HTTP_HOST"]}/#{current_user.name}"
+  redirect to(current_user.name)
 end
 
 get '/:user_name/:title/edit' do
@@ -131,7 +131,7 @@ post '/:user_name' do
     @work = @user.works.create(attributes)
   end
   if @work.save
-    redirect "http://#{request.env["HTTP_HOST"]}/#{@user.name}/#{CGI.escape(@work.title)}"
+    redirect to("#{@user.name}/#{@work.title}")
   else
     haml :work
   end
