@@ -11,6 +11,8 @@ gem 'moneta', require: 'rack/session/moneta'
 gem 'haml'
 gem 'tilt-jbuilder', require: 'sinatra/jbuilder'
 gem 'config'
+gem 'kaminari-mongoid'
+gem 'kaminari-sinatra'
 
 group :development do
 	gem 'shotgun'
