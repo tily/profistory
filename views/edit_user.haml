@@ -1,4 +1,4 @@
-%form.form-horizontal{role:'form',method:'POST',action:"/#{current_user.name}/settings"}
+%form.form-horizontal{role:'form',method:'POST',action:to("/#{current_user.name}/settings")}
   %div.form-group
     %label.col-sm-2.control-label{for:'allow_edition_to'} allow edition to
     %div.col-sm-10

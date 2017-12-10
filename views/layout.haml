@@ -27,21 +27,21 @@
     %div.container
       %p{style:"padding-top:1em;padding-bottom:0em"}
         %strong
-          %a{href:'/'}= Settings.title
+          %a{href:to('/')}= Settings.title
           - if @user
             &nbsp;>&nbsp;
-            %a{href:"/#{@user.name}"} #{@user.screen_name}
+            %a{href:to(@user.name)} #{@user.screen_name}
           - if @work
             &nbsp;>&nbsp;
             = @work.title
         %span{style:'float:right'}
           - if current_user
-            %a{href:"/#{current_user.name}"} my page
+            %a{href:to(current_user.name)} my page
             &nbsp;|&nbsp;
-            %a{href:"/#{current_user.name}/settings/edit"} settings
+            %a{href:to("#{current_user.name}/settings/edit")} settings
             &nbsp;|&nbsp;
-            %a{href:'/logout'} logout
+            %a{href:to('logout')} logout
           - else
-            %a{href:"/auth/#{Settings.auth.provider}"} login
+            %a{href:to("auth/#{Settings.auth.provider}")} login
       %hr
       != yield
