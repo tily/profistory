@@ -70,6 +70,7 @@ get '/logout' do
 end
 
 get '/' do
+  @users = User.desc(:created_at).limit(20)
   @works = Work.desc(:created_at).limit(20)
   haml :index
 end
