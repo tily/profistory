@@ -2,6 +2,7 @@ Bundler.require
 require_relative './config/boot'
 require_relative './models/user'
 require_relative './models/work'
+require_relative './models/tag'
 
 helpers do
   def current_user
@@ -50,6 +51,7 @@ end
 get '/' do
   @users = User.desc(:created_at).limit(20)
   @works = Work.desc(:created_at).limit(20)
+  @tags = Tag.all
   haml :index
 end
 
@@ -127,5 +129,13 @@ namespace '/users' do
   get do
     @users = User.page(params[:page])
     haml :list_users
+  end
+end
+
+namespace '/tags' do
+  get '/:name' do
+    @users = User.tagged_with(params[:name])
+    @works = Work.tagged_with(params[:name])
+    haml :show_tag
   end
 end
