@@ -53,63 +53,69 @@ get '/' do
   haml :index
 end
 
-get '/settings/edit' do
-  haml :edit_user
-end
-
-post '/settings' do
-  current_user.update_attributes!(
-    allow_edition_to: CGI.unescape(params[:allow_edition_to]),
-    tilt: params[:tilt],
-    tag_list: params[:tags]
-  )
-  redirect to(current_user.name)
-end
-
-get '/works/:title/edit' do
-  @work = Work.where(:title => CGI.unescape(params[:title])).first
-  haml :edit_work
-end
-
-get '/works/:title' do
-  @work = Work.where(:title => CGI.unescape(params[:title])).first
-  haml :work
-end
-
-get '/users/:user_name.json' do
-  content_type 'text/json'
-  if params[:user_name] == '*'
-    @works = Work.desc(:date)
-    JSON.pretty_generate JSON.parse jbuilder :user, layout: false
-  else
-    @works = User.where(:name => params[:user_name]).first.works.desc(:date)
+namespace '/settings' do
+  get '/edit' do
+    haml :edit_user
   end
-  JSON.pretty_generate JSON.parse jbuilder :user, layout: false
-end
 
-get '/users/:user_name' do
-  @user = User.where(:name => params[:user_name]).first
-  @works = @user.works.desc(:date)
-  @years = @user.works.map {|work| work.date.year }.uniq.sort.reverse
-  haml :user
-end
-
-post '/works' do
-  attributes =  {
-    title: CGI.unescape(params[:title]),
-    tag_list: params[:tags],
-    description: params[:description],
-    links_text: params[:links_text],
-    date: params[:date]
-  }
-  if params[:old_title] && (@work = current_user.works.where(:title => CGI.unescape(params[:old_title])).first)
-    @work.update_attributes(attributes)
-  else
-    @work = current_user.works.create(attributes)
+  post do
+    current_user.update_attributes!(
+      allow_edition_to: CGI.unescape(params[:allow_edition_to]),
+      tilt: params[:tilt],
+      tag_list: params[:tags]
+    )
+    redirect to(current_user.name)
   end
-  if @work.save
-    redirect to("works/#{@work.title}")
-  else
+end
+
+namespace '/works' do
+  get '/:title/edit' do
+    @work = Work.where(:title => CGI.unescape(params[:title])).first
+    haml :edit_work
+  end
+
+  get '/:title' do
+    @work = Work.where(:title => CGI.unescape(params[:title])).first
     haml :work
+  end
+
+  post '/' do
+    attributes =  {
+      title: CGI.unescape(params[:title]),
+      tag_list: params[:tags],
+      description: params[:description],
+      links_text: params[:links_text],
+      date: params[:date]
+    }
+    if params[:old_title] && (@work = current_user.works.where(:title => CGI.unescape(params[:old_title])).first)
+      @work.update_attributes(attributes)
+    else
+      @work = current_user.works.create(attributes)
+    end
+    if @work.save
+      redirect to("works/#{@work.title}")
+    else
+      haml :work
+    end
+  end
+end
+
+namespace '/users' do
+  get '/:user_name.json' do
+    content_type 'text/json'
+    if params[:user_name] == '*'
+      @works = Work.desc(:date)
+      JSON.pretty_generate JSON.parse jbuilder :user, layout: false
+    else
+      @works = User.where(:name => params[:user_name]).first.works.desc(:date)
+    end
+    JSON.pretty_generate JSON.parse jbuilder :user, layout: false
+  end
+
+  get '/:user_name' do
+    @user = User.where(:name => params[:user_name]).first
+    @works = @user.works.desc(:date)
+    @years = @user.works.map {|work| work.date.year }.uniq.sort.reverse
+    haml :user
   end
 end
