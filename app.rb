@@ -52,7 +52,7 @@ get '/' do
   @users = User.desc(:created_at).limit(20)
   @works = Work.desc(:created_at).limit(20)
   @tags = Tag.all
-  haml :index
+  haml :list_all
 end
 
 namespace '/settings' do
@@ -78,7 +78,7 @@ namespace '/works' do
 
   get '/:title' do
     @work = Work.where(:title => CGI.unescape(params[:title])).first
-    haml :work
+    haml :show_work
   end
 
   post do
@@ -97,7 +97,7 @@ namespace '/works' do
     if @work.save
       redirect to("works/#{@work.title}")
     else
-      haml :work
+      haml :edit_work
     end
   end
 
@@ -112,18 +112,18 @@ namespace '/users' do
     content_type 'text/json'
     if params[:user_name] == '*'
       @works = Work.desc(:date)
-      JSON.pretty_generate JSON.parse jbuilder :user, layout: false
+      JSON.pretty_generate JSON.parse jbuilder :show_user, layout: false
     else
       @works = User.where(:name => params[:user_name]).first.works.desc(:date)
     end
-    JSON.pretty_generate JSON.parse jbuilder :user, layout: false
+    JSON.pretty_generate JSON.parse jbuilder :show_user, layout: false
   end
 
   get '/:user_name' do
     @user = User.where(:name => params[:user_name]).first
     @works = @user.works.desc(:date)
     @years = @user.works.map {|work| work.date.year }.uniq.sort.reverse
-    haml :user
+    haml :show_user
   end
 
   get do
