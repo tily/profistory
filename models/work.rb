@@ -18,7 +18,7 @@ class Work
       work.errors.add(:link_text, "includes more than 100 URLs")
     end
   end
-  belongs_to :user
+  has_and_belongs_to_many :users
   def links
     links_text.gsub(/\r/, '').split(/\n{2,}/).map {|x| x.split("\n") }
   end
