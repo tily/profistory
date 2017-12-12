@@ -1,5 +1,11 @@
-- if allowed_to_edit?(current_user)
-  %a{href:to("works/#{CGI.escape(@work.title)}/edit")} edit work
+- if (@work.users.find(current_user.id) rescue nil)
+  - if allowed_to_edit?(current_user)
+    %a{href:to("works/#{CGI.escape(@work.title)}/edit")} edit work
+  %form{method:'POST',action:to("works/#{CGI.escape(@work.title)}/leave")}
+    %button{type:'submit',class:'btn btn-default'} leave
+- else
+  %form{method:'POST',action:to("works/#{CGI.escape(@work.title)}/join")}
+    %button{type:'submit',class:'btn btn-default'} join
 %div.tilt
   %h1
     = @work.title
@@ -10,6 +16,10 @@
     - @work.tags.each do |tag|
       %span.glyphicon.glyphicon-tag
       %a{href:to("tags/#{tag}")}= tag
+  %p
+    %strong members:
+    - @work.users.each do |user|
+      %a{href:to("users/#{user.name}")}= user.screen_name
   %p= "#{@work.date.strftime('%Y-%m-%d')}"
 - @work.links.each_with_index do |links, i|
   %div.row.tilt

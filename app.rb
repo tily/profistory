@@ -101,6 +101,18 @@ namespace '/works' do
     end
   end
 
+  post '/:title/join' do
+    @work = Work.where(:title => CGI.unescape(params[:title])).first
+    @work.users.push(current_user)
+    redirect to("works/#{@work.title}")
+  end
+
+  post '/:title/leave' do
+    @work = Work.where(:title => CGI.unescape(params[:title])).first
+    @work.users.delete(current_user)
+    redirect to("works/#{@work.title}")
+  end
+
   get do
     @works = Work.page(params[:page])
     haml :list_works
