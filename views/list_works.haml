@@ -2,4 +2,4 @@
 %ul
   - @works.each do |work|
     %li
-      %a{href:to("works/#{CGI.escape(work.title)}")}= work.title
+      %a{href:to("works/#{work.title_escaped}")}= work.title
