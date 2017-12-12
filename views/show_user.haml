@@ -17,4 +17,4 @@
           - if work.date.year == year
             %li
               #{work.date.strftime("%m/%d")}
-              %a{href:to("works/#{CGI.escape(work.title)}"),alt:work.description}= work.title
+              %a{href:to("works/#{work.title_escaped}"),alt:work.description}= work.title
