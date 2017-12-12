@@ -22,4 +22,8 @@ class Work
   def links
     links_text.gsub(/\r/, '').split(/\n{2,}/).map {|x| x.split("\n") }
   end
+
+  def title_escaped
+    CGI.escape(self.title)
+  end
 end
