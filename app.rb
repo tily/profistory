@@ -95,7 +95,7 @@ namespace '/works' do
       @work = current_user.works.create(attributes)
     end
     if @work.save
-      redirect to("works/#{@work.title}")
+      redirect to("works/#{@work.title_escaped}")
     else
       haml :edit_work
     end
@@ -104,13 +104,13 @@ namespace '/works' do
   post '/:title/join' do
     @work = Work.where(:title => CGI.unescape(params[:title])).first
     @work.users.push(current_user)
-    redirect to("works/#{@work.title}")
+    redirect to("works/#{@work.title_escaped}")
   end
 
   post '/:title/leave' do
     @work = Work.where(:title => CGI.unescape(params[:title])).first
     @work.users.delete(current_user)
-    redirect to("works/#{@work.title}")
+    redirect to("works/#{@work.title_escaped}")
   end
 
   get do
