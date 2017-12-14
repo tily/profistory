@@ -1,0 +1,46 @@
+---
+en:
+  profistory:
+    views:
+      layout:
+        application:
+          login: Login
+          logout: Logout
+          settings: Settings
+          my_page: My Page
+      edit_user:
+        users: Employees
+        tags: Tags (Separate with comma)
+        update: Update
+      edit_work:
+        date: Date
+        title: Title
+        tags: Tags (Separate with comma)
+        description: Description
+        links: Links
+        links_description: 1 行に 1 URL を入力 (空行を入れることで罫線を挿入)
+        update: Update
+      list_all:
+        works: Recent Works
+        users: Recent Employees
+        tags: Tags
+      list_users:
+        users: Employees
+      list_works:
+        works: Works
+      show_tag:
+        tag: Tag
+        users: Employees
+        works: Works
+      show_user:
+        tags: "Tags:"
+        add_work: Add work
+        get_json: Get JSON
+      show_work:
+        tags: "Tags:"
+        members: "Members:"
+        join: Join
+        leave: Leave
+        edit_work: Edit work
+
+
