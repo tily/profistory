@@ -4,7 +4,7 @@
     %strong= t('profistory.views.show_user.tags')
     - @user.tags.each do |tag|
       %a{href:to("tags/#{tag}")}= tag
-  - if allowed_to_edit?(@user)
+  - if @user == current_user
     %a{href:to("works/*/edit")}= t('profistory.views.show_user.add_work')
     &nbsp;|&nbsp;
   %a{href:to("users/#{@user.name}.json")}= t('profistory.views.show_user.get_json')

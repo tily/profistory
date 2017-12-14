@@ -1,5 +1,5 @@
 - if (@work.users.find(current_user.id) rescue nil)
-  - if allowed_to_edit?(current_user)
+  - if allowed_to_edit?(@work, current_user)
     %a{href:to("works/#{@work.title_escaped}/edit")}= t('profistory.views.show_work.edit_work')
   %form{method:'POST',action:to("works/#{@work.title_escaped}/leave")}
     %button{type:'submit',class:'btn btn-default'}= t('profistory.views.show_work.leave')
