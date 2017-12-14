@@ -1,15 +1,5 @@
 %form.form-horizontal{role:'form',method:'POST',action:to("/settings")}
   %div.form-group
-    %label.col-sm-2.control-label{for:'allow_edition_to'} allow edition to
-    %div.col-sm-10
-      - ['none', 'nnade users', 'anyone'].each do |whom|
-        %div.radio
-          %label
-            - if current_user.allow_edition_to == whom
-              %input{name:'allow_edition_to',type:'radio',value:whom,checked:true}=whom
-            - else
-              %input{name:'allow_edition_to',type:'radio',value:whom}=whom
-  %div.form-group
     %label.col-sm-2.control-label{for:'tags'}= t('profistory.views.edit_user.tags')
     %div.col-sm-10
       %input.form-control{name:'tags',type:'text',value:current_user.tags.join(", ")}
