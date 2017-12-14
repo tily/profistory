@@ -6,12 +6,7 @@ en:
         application:
           login: Login
           logout: Logout
-          settings: Settings
           my_page: My Page
-      edit_user:
-        users: Employees
-        tags: Tags (Separate with comma)
-        update: Update
       edit_work:
         date: Date
         title: Title
@@ -36,6 +31,9 @@ en:
         tags: "Tags:"
         add_work: Add work
         get_json: Get JSON
+        add_tag: Add
+        add_tag_description: Separate with comma
+        cancel_add_tag: Cancel
       show_work:
         tags: "Tags:"
         members: "Members:"

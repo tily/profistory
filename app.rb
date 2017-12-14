@@ -51,19 +51,6 @@ get '/' do
   haml :list_all
 end
 
-namespace '/settings' do
-  get '/edit' do
-    haml :edit_user
-  end
-
-  post do
-    current_user.update_attributes!(
-      tag_list: params[:tags]
-    )
-    redirect to("users/#{current_user.name}")
-  end
-end
-
 namespace '/works' do
   get '/:title/edit' do
     @work = Work.where(:title => CGI.unescape(params[:title])).first
@@ -133,6 +120,14 @@ namespace '/users' do
     @works = @user.works.desc(:date)
     @years = @user.works.map {|work| work.date.year }.uniq.sort.reverse
     haml :show_user
+  end
+
+  post '/:user_name' do
+    @user = User.where(:name => params[:user_name]).first
+    @user.update_attributes!(
+      tag_list: params[:tags]
+    )
+    redirect to("users/#{params[:user_name]}")
   end
 
   get do
