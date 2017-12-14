@@ -10,10 +10,6 @@
             - else
               %input{name:'allow_edition_to',type:'radio',value:whom}=whom
   %div.form-group
-    %label.col-sm-2.control-label{for:'tilt'} tilt (0-360)
-    %div.col-sm-10
-      %input.form-control{name:'tilt',type:'number',value:current_user.tilt || 0}
-  %div.form-group
     %label.col-sm-2.control-label{for:'tags'} tags (separate with comma)
     %div.col-sm-10
       %input.form-control{name:'tags',type:'text',value:current_user.tags.join(", ")}
