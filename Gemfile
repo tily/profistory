@@ -23,6 +23,8 @@ gem 'config',
   ref: 'cc22254bad27e8779d3edbdeef3899a7c033cb85'
 gem 'kaminari-mongoid'
 gem 'kaminari-sinatra'
+gem 'i18n', require: ['i18n', 'i18n/backend/fallbacks']
+gem 'rack-contrib'
 
 group :development do
 	gem 'shotgun'
