@@ -1,4 +1,4 @@
-%div.tilt
+%div
   %h1= @user.screen_name
   %p
     %strong tags:
@@ -8,7 +8,7 @@
     %a{href:to("works/*/edit")} add work
     &nbsp;|&nbsp;
   %a{href:to("users/#{@user.name}.json")} get json
-%div.row.tilt
+%div.row
   - @years.each do |year|
     %div.col-md-4
       %h2= year
