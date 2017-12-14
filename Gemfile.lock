@@ -132,6 +132,8 @@ GEM
       tilt (>= 1.4.1, < 3)
     padrino-support (0.14.1.1)
     rack (2.0.3)
+    rack-contrib (2.0.1)
+      rack (~> 2.0)
     rack-protection (2.0.0)
       rack
     rails-dom-testing (2.0.3)
@@ -168,6 +170,7 @@ PLATFORMS
 DEPENDENCIES
   config!
   haml
+  i18n
   kaminari-mongoid
   kaminari-sinatra
   moneta
@@ -176,6 +179,7 @@ DEPENDENCIES
   mongoid-simple-tags!
   omniauth-saml
   omniauth-twitter
+  rack-contrib
   ruby-saml!
   shotgun
   sinatra
