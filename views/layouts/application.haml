@@ -29,12 +29,12 @@
             = @work.title
         %span{style:'float:right'}
           - if current_user
-            %a{href:to("users/#{current_user.name}")} my page
+            %a{href:to("users/#{current_user.name}")}= t('profistory.views.layout.application.my_page')
             &nbsp;|&nbsp;
-            %a{href:to("settings/edit")} settings
+            %a{href:to("settings/edit")}= t('profistory.views.layout.application.settings')
             &nbsp;|&nbsp;
-            %a{href:to('logout')} logout
+            %a{href:to('logout')}= t('profistory.views.layout.application.logout')
           - else
-            %a{href:to("auth/#{Settings.auth.provider}")} login
+            %a{href:to("auth/#{Settings.auth.provider}")}= t('profistory.views.layout.application.login')
       %hr
       != yield

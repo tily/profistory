@@ -10,9 +10,9 @@
             - else
               %input{name:'allow_edition_to',type:'radio',value:whom}=whom
   %div.form-group
-    %label.col-sm-2.control-label{for:'tags'} tags (separate with comma)
+    %label.col-sm-2.control-label{for:'tags'}= t('profistory.views.edit_user.tags')
     %div.col-sm-10
       %input.form-control{name:'tags',type:'text',value:current_user.tags.join(", ")}
   %div.form-group
     %div.col-sm-offset-2.col-sm-10
-      %button{type:'submit',class:'btn btn-default'} update settings
+      %button{type:'submit',class:'btn btn-default'}= t('profistory.views.edit_user.update')
