@@ -1,0 +1,34 @@
+a:link,a:visited,a:hover,a:active {
+  color: blue;
+}
+
+img {
+  max-width: 100%;
+}
+
+div {
+  word-break: break-all;
+}
+
+img.favicon {
+  width: 1em;
+  height: 1em;
+  filter: grayscale(100%);
+}
+
+.profistory-work-link {
+  padding-bottom: 10px;
+}
+
+.profistory-navbar {
+  padding-top: 1em;
+  padding-bottom: 0em;
+}
+
+.profistory-navbar-right {
+  float: right;
+}
+
+.profistory-links-textarea {
+  height: 1000;
+}
