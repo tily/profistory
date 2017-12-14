@@ -1,23 +1,23 @@
 - if (@work.users.find(current_user.id) rescue nil)
   - if allowed_to_edit?(current_user)
-    %a{href:to("works/#{@work.title_escaped}/edit")} edit work
+    %a{href:to("works/#{@work.title_escaped}/edit")}= t('profistory.views.show_work.edit_work')
   %form{method:'POST',action:to("works/#{@work.title_escaped}/leave")}
-    %button{type:'submit',class:'btn btn-default'} leave
+    %button{type:'submit',class:'btn btn-default'}= t('profistory.views.show_work.leave')
 - else
   %form{method:'POST',action:to("works/#{@work.title_escaped}/join")}
-    %button{type:'submit',class:'btn btn-default'} join
+    %button{type:'submit',class:'btn btn-default'}= t('profistory.views.show_work.join')
 %div
   %h1
     = @work.title
     %small
       = @work.description
   %p
-    %strong tags:
+    %strong= t('profistory.views.show_work.tags')
     - @work.tags.each do |tag|
       %span.glyphicon.glyphicon-tag
       %a{href:to("tags/#{tag}")}= tag
   %p
-    %strong members:
+    %strong= t('profistory.views.show_work.members')
     - @work.users.each do |user|
       %a{href:to("users/#{user.name}")}= user.screen_name
   %p= "#{@work.date.strftime('%Y-%m-%d')}"

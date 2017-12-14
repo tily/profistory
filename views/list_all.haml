@@ -1,18 +1,18 @@
 %div.row
   %div.col-md-4
-    %h2 Works
+    %h2= t('profistory.views.list_all.works')
     %ul
       - @works.each do |work|
         %li
           %a{href:to("works/#{work.title_escaped}")}= work.title
   %div.col-md-4
-    %h2 Users
+    %h2= t('profistory.views.list_all.users')
     %ul
       - @users.each do |user|
         %li
           %a{href:to("users/#{user.name}")}= user.screen_name
   %div.col-md-4
-    %h2 Tags
+    %h2= t('profistory.views.list_all.tags')
     %ul.list-group
       - @tags.each do |tag|
         %li.list-group-item
