@@ -7,9 +7,7 @@ class User
   field :screen_name, :type => String
   field :provider, :type => String
   field :allow_edition_to, :type => String
-  field :tilt, :type => Integer
   validates :allow_edition_to, :allow_nil => true, :inclusion => {:in => ['none', 'nnade users', 'anyone']}
-  validates :tilt, :allow_nil => true, :inclusion => {:in => (0..359)}
   has_and_belongs_to_many :works
   def self.create_with_omniauth(auth)
     create! do |account|
