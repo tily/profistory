@@ -1,13 +1,13 @@
 %div
   %h1= @user.screen_name
   %p
-    %strong tags:
+    %strong= t('profistory.views.show_user.tags')
     - @user.tags.each do |tag|
       %a{href:to("tags/#{tag}")}= tag
   - if allowed_to_edit?(@user)
-    %a{href:to("works/*/edit")} add work
+    %a{href:to("works/*/edit")}= t('profistory.views.show_user.add_work')
     &nbsp;|&nbsp;
-  %a{href:to("users/#{@user.name}.json")} get json
+  %a{href:to("users/#{@user.name}.json")}= t('profistory.views.show_user.get_json')
 %div.row
   - @years.each do |year|
     %div.col-md-4

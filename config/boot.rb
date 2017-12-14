@@ -19,5 +19,9 @@ configure do
       name_identifier_format:         Settings.auth.saml.name_identifier_format
   end
   use Rack::Session::Moneta, store: Moneta.new(:Mongo, host: "db")
+  use Rack::Locale
   Mongoid.load!("config/mongoid.yml")
+  I18n::Backend::Simple.send(:include, I18n::Backend::Fallbacks)
+  I18n.load_path = Dir['config/locales/*.yml']
+  I18n.backend.load_translations
 end
