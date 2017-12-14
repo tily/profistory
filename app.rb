@@ -63,7 +63,6 @@ namespace '/settings' do
   post do
     current_user.update_attributes!(
       allow_edition_to: CGI.unescape(params[:allow_edition_to]),
-      tilt: params[:tilt],
       tag_list: params[:tags]
     )
     redirect to("users/#{current_user.name}")

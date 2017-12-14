@@ -6,7 +6,7 @@
 - else
   %form{method:'POST',action:to("works/#{@work.title_escaped}/join")}
     %button{type:'submit',class:'btn btn-default'} join
-%div.tilt
+%div
   %h1
     = @work.title
     %small
@@ -22,7 +22,7 @@
       %a{href:to("users/#{user.name}")}= user.screen_name
   %p= "#{@work.date.strftime('%Y-%m-%d')}"
 - @work.links.each_with_index do |links, i|
-  %div.row.tilt
+  %div.row
     - links.each do |link|
       %div.col-md-3{style:'padding-bottom:10px'}
         %img.favicon{src:'/favicon.ico'}
