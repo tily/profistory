@@ -4,6 +4,16 @@
     %strong= t('profistory.views.show_user.tags')
     - @user.tags.each do |tag|
       %a{href:to("tags/#{tag}")}= tag
+    %a.add-tag{} add
+  %form.form-horizontal{role:'form',method:'POST',action:to("/settings"), style:"display: none;"}
+    %div.form-group
+      %label.col-sm-2.control-label{for:'tags'}= t('profistory.views.edit_user.tags')
+      %div.col-sm-10
+        %input.form-control{name:'tags',type:'text',value:current_user.tags.join(", ")}
+    %div.form-group
+      %div.col-sm-offset-2.col-sm-10
+        %button{type:'submit',class:'btn btn-default'}= t('profistory.views.edit_user.update')
+    %a.cancel-add-tag{} cancel
   - if @user == current_user
     %a{href:to("works/*/edit")}= t('profistory.views.show_user.add_work')
     &nbsp;|&nbsp;
@@ -18,3 +28,6 @@
             %li
               #{work.date.strftime("%m/%d")}
               %a{href:to("works/#{work.title_escaped}"),alt:work.description}= work.title
+:javascript
+  $('.add-tag').click(() => $('form').show())
+  $('.cancel-add-tag').click(() => $('form').hide())
