@@ -16,12 +16,8 @@ helpers do
     title
   end
 
-  def allowed_to_edit?(user)
-    case user.allow_edition_to
-    when 'anyone'; true
-    when 'users'; current_user
-    else; current_user == user
-    end
+  def allowed_to_edit?(work, user)
+    work.users.find(user) rescue nil
   end
 end
 
@@ -62,7 +58,6 @@ namespace '/settings' do
 
   post do
     current_user.update_attributes!(
-      allow_edition_to: CGI.unescape(params[:allow_edition_to]),
       tag_list: params[:tags]
     )
     redirect to("users/#{current_user.name}")
@@ -89,6 +84,9 @@ namespace '/works' do
       date: params[:date]
     }
     if params[:old_title] && (@work = current_user.works.where(:title => CGI.unescape(params[:old_title])).first)
+      if !allowed_to_edit?(@work, current_user)
+        halt 403
+      end
       @work.update_attributes(attributes)
     else
       @work = current_user.works.create(attributes)
