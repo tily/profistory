@@ -24,7 +24,7 @@
 - @work.links.each_with_index do |links, i|
   %div.row
     - links.each do |link|
-      %div.col-md-3{style:'padding-bottom:10px'}
+      %div.col-md-3.profistory-work-link
         %img.favicon{src:'/favicon.ico'}
         %a{href:link,target:'_blank'}= link
   - if i != @work.links.size - 1

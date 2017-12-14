@@ -26,7 +26,7 @@
     %label.col-sm-2.control-label{for:'links'} links
     %div.col-sm-10
       %span.help-block one url per one line, insert empty lines to group your links
-      %textarea.form-control{name:'links_text',rows:'25',style:'height: 1000'}
+      %textarea.form-control.profistory-links-textarea{name:'links_text',rows:'25'}
         = @work.try(:links_text)
   %div.form-group
     %div.col-sm-offset-2.col-sm-10
