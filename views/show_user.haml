@@ -1,19 +1,16 @@
 %div
   %h1= @user.screen_name
   %p
-    %strong= t('profistory.views.show_user.tags')
-    - @user.tags.each do |tag|
-      %a{href:to("tags/#{tag}")}= tag
-    %a.add-tag{} add
-  %form.form-horizontal{role:'form',method:'POST',action:to("/settings"), style:"display: none;"}
-    %div.form-group
-      %label.col-sm-2.control-label{for:'tags'}= t('profistory.views.edit_user.tags')
-      %div.col-sm-10
-        %input.form-control{name:'tags',type:'text',value:current_user.tags.join(", ")}
-    %div.form-group
-      %div.col-sm-offset-2.col-sm-10
-        %button{type:'submit',class:'btn btn-default'}= t('profistory.views.edit_user.update')
-    %a.cancel-add-tag{} cancel
+    %form.form-inline{role:'form',method:'POST',action:to("users/#{@user.name}")}
+      %strong= t('profistory.views.show_user.tags')
+      %span.tags
+        - @user.tags.each do |tag|
+          %a{href:to("tags/#{tag}")}= tag
+        -if @user == current_user
+          %a.add-tag{href:'javascript:void(0)'}= t('profistory.views.show_user.add_tag')
+      %span.edit-tags{style:'display: none;'}
+        %input.form-control.input-sm{name:'tags',type:'text',value:current_user.tags.join(", "),placeholder:t('profistory.views.show_user.add_tag_description')}
+        %a.cancel-add-tag{href:'javascript:void(0)'}= t('profistory.views.show_user.cancel_add_tag')
   - if @user == current_user
     %a{href:to("works/*/edit")}= t('profistory.views.show_user.add_work')
     &nbsp;|&nbsp;
@@ -29,5 +26,11 @@
               #{work.date.strftime("%m/%d")}
               %a{href:to("works/#{work.title_escaped}"),alt:work.description}= work.title
 :javascript
-  $('.add-tag').click(() => $('form').show())
-  $('.cancel-add-tag').click(() => $('form').hide())
+  $('.add-tag').click(() => {
+    $('.edit-tags').show()
+    $('.tags').hide()
+  })
+  $('.cancel-add-tag').click(() => {
+    $('.edit-tags').hide()
+    $('.tags').show()
+  })

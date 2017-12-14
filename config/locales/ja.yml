@@ -6,12 +6,7 @@ en:
         application:
           login: ログイン
           logout: ログアウト
-          settings: 設定
           my_page: マイページ
-      edit_user:
-        users: 最近登録した社員
-        tags: タグ (カンマ区切り)
-        update: 登録する
       edit_work:
         date: 日付
         title: タイトル
@@ -36,6 +31,9 @@ en:
         tags: "タグ:"
         add_work: 仕事を追加
         get_json: JSON としてダウンロード
+        add_tag: 追加
+        add_tag_description: カンマ区切り
+        cancel_add_tag: キャンセル
       show_work:
         tags: "タグ:"
         members: "メンバー:"
