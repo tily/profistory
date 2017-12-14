@@ -6,7 +6,7 @@ class Work
   field :description, type: String
   field :links_text, type: String
   field :date, type: Time
-  validates :title, :length => {:maximum => 35}
+  validates :title, :length => {:maximum => 35}, uniqueness: true
   validates :description, :length => {:maximum => 140}
   validates :title, :presence => true
   validates :links_text, :presence => true
