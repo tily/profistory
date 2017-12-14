@@ -1,0 +1,46 @@
+---
+en:
+  profistory:
+    views:
+      layout:
+        application:
+          login: ログイン
+          logout: ログアウト
+          settings: 設定
+          my_page: マイページ
+      edit_user:
+        users: 最近登録した社員
+        tags: タグ (カンマ区切り)
+        update: 登録する
+      edit_work:
+        date: 日付
+        title: タイトル
+        tags: タグ (カンマ区切り)
+        description: 説明
+        links: リンク一覧
+        links_description: 1 行に 1 URL を入力 (空行を入れることで罫線を挿入)
+        update: 登録する
+      list_all:
+        works: 最近登録された仕事
+        users: 最近登録した社員
+        tags: タグ
+      list_users:
+        users: 社員一覧
+      list_works:
+        works: 仕事一覧
+      show_tag:
+        tag: タグ
+        users: 社員一覧
+        works: 仕事一覧
+      show_user:
+        tags: "タグ:"
+        add_work: 仕事を追加
+        get_json: JSON としてダウンロード
+      show_work:
+        tags: "タグ:"
+        members: "メンバー:"
+        join: この仕事に参加
+        leave: この仕事から抜ける
+        edit_work: この仕事を編集
+
+
