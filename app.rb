@@ -19,6 +19,12 @@ helpers do
   def allowed_to_edit?(work, user)
     work.users.find(user) rescue nil
   end
+
+  def gravatar_icon(user, size=nil)
+    url = "//gravatar.com/avatar/#{Digest::MD5.hexdigest(user.uid)}"
+    url += "?size=#{size}" if size
+    url
+  end
 end
 
 before do
