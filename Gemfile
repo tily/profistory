@@ -25,7 +25,10 @@ gem 'kaminari-mongoid'
 gem 'kaminari-sinatra'
 gem 'i18n', require: ['i18n', 'i18n/backend/fallbacks']
 gem 'rack-contrib'
+gem 'thor'
 
 group :development do
 	gem 'shotgun'
+  gem 'faker-japanese'
+  gem 'romaji'
 end
