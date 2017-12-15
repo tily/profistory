@@ -17,9 +17,9 @@
       %a{href:to("users")}= t("profistory.views.list_all.more")
   %div.col-md-4
     %h2= t('profistory.views.list_all.tags')
-    %ul.list-group
+    %ul
       - @tags.each do |tag|
-        %li.list-group-item
-          %span.glyphicon.glyphicon-tag
+        %li
           %a{href:to("tags/#{tag[:name]}")} #{tag[:name]}
-          %span.badge #{tag[:count]}
+    %p
+      %a{href:to("tags")}= t("profistory.views.list_all.more")
