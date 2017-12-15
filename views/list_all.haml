@@ -1,25 +1,29 @@
 %div.row
   %div.col-md-4
     %h2= t('profistory.views.list_all.works')
-    %ul
+    %ul.list-group
       - @works.each do |work|
-        %li
+        %li.list-group-item
+          = work.date.strftime('%Y/%m/%d')
           %a{href:to("works/#{work.title_escaped}")}= work.title
     %p
-      %a{href:to("works")}= t("profistory.views.list_all.more")
+      %a.more{href:to("works")}= t("profistory.views.list_all.more")
   %div.col-md-4
     %h2= t('profistory.views.list_all.users')
-    %ul
+    %ul.list-group
       - @users.each do |user|
-        %li
+        %li.list-group-item
+          %img{src:"//gravatar.com/avatar/#{Digest::MD5.hexdigest(user.uid)}?size=20"}
           %a{href:to("users/#{user.name}")}= user.screen_name
     %p
-      %a{href:to("users")}= t("profistory.views.list_all.more")
+      %a.more{href:to("users")}= t("profistory.views.list_all.more")
   %div.col-md-4
     %h2= t('profistory.views.list_all.tags')
-    %ul
+    %ul.list-group
       - @tags.each do |tag|
-        %li
+        %li.list-group-item
+          %span.glyphicon.glyphicon-tag
           %a{href:to("tags/#{tag[:name]}")} #{tag[:name]}
+          %span.badge= tag[:count]
     %p
-      %a{href:to("tags")}= t("profistory.views.list_all.more")
+      %a.more{href:to("tags")}= t("profistory.views.list_all.more")
