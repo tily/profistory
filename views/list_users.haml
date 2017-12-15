@@ -1,5 +1,10 @@
 %h2= t('profistory.views.list_users.users')
-%ul
-  - @users.each do |user|
-    %li
-      %a{href:to("users/#{user.name}")}= user.screen_name
+%div.row
+  - @atoz.each do |c|
+    %div.col-md-4
+      %h2= c
+      %ul
+        - @users.each do |user|
+          - if user.name[0].upcase == c
+            %li
+              %a{href:to("users/#{user.name}")}= user.screen_name
