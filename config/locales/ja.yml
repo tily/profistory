@@ -16,8 +16,8 @@ en:
         links_description: 1 行に 1 URL を入力 (空行を入れることで罫線を挿入)
         update: 登録する
       list_all:
-        works: 最近登録された仕事
-        users: 最近登録した社員
+        works: 仕事
+        users: 社員
         tags: タグ
         more: "> もっと見る"
       list_users:
