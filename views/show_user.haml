@@ -9,7 +9,7 @@
         -if @user == current_user
           %a.add-tag{href:'javascript:void(0)'}= t('profistory.views.show_user.add_tag')
       %span.edit-tags{style:'display: none;'}
-        %input.form-control.input-sm{name:'tags',type:'text',value:current_user.tags.join(", "),placeholder:t('profistory.views.show_user.add_tag_description')}
+        %input.form-control.input-sm{name:'tags',type:'text',value:@user.tags.join(", "),placeholder:t('profistory.views.show_user.add_tag_description')}
         %a.cancel-add-tag{href:'javascript:void(0)'}= t('profistory.views.show_user.cancel_add_tag')
   - if @user == current_user
     %a{href:to("works/*/edit")}= t('profistory.views.show_user.add_work')

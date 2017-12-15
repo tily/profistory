@@ -1,12 +1,13 @@
-- if (@work.users.find(current_user.id) rescue nil)
-  - if allowed_to_edit?(@work, current_user)
-    %a{href:to("works/#{@work.title_escaped}/edit")}= t('profistory.views.show_work.edit_work')
-  - if @work.users.size != 1
-    %form{method:'POST',action:to("works/#{@work.title_escaped}/leave")}
-      %button{type:'submit',class:'btn btn-default'}= t('profistory.views.show_work.leave')
-- else
-  %form{method:'POST',action:to("works/#{@work.title_escaped}/join")}
-    %button{type:'submit',class:'btn btn-default'}= t('profistory.views.show_work.join')
+- if current_user
+  - if (@work.users.find(current_user.id) rescue nil)
+    - if allowed_to_edit?(@work, current_user)
+      %a{href:to("works/#{@work.title_escaped}/edit")}= t('profistory.views.show_work.edit_work')
+    - if @work.users.size != 1
+      %form{method:'POST',action:to("works/#{@work.title_escaped}/leave")}
+        %button{type:'submit',class:'btn btn-default'}= t('profistory.views.show_work.leave')
+  - else
+    %form{method:'POST',action:to("works/#{@work.title_escaped}/join")}
+      %button{type:'submit',class:'btn btn-default'}= t('profistory.views.show_work.join')
 %div
   %h1
     = @work.title
