@@ -47,7 +47,7 @@ end
 get '/' do
   @users = User.desc(:created_at).limit(20)
   @works = Work.desc(:created_at).limit(20)
-  @tags = Tag.all
+  @tags = Tag.all[0, 20]
   haml :list_all
 end
 
@@ -139,6 +139,11 @@ namespace '/users' do
 end
 
 namespace '/tags' do
+  get do
+    @tags = Tag.all
+    haml :list_tags
+  end
+
   get '/:name' do
     @users = User.tagged_with(params[:name])
     @works = Work.tagged_with(params[:name])

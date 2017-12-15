@@ -24,6 +24,8 @@ en:
         users: 社員一覧
       list_works:
         works: 仕事一覧
+      list_tags:
+        tags: タグ一覧
       show_tag:
         tag: タグ
         users: 社員一覧
