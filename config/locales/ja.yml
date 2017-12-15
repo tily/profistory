@@ -19,6 +19,7 @@ en:
         works: 最近登録された仕事
         users: 最近登録した社員
         tags: タグ
+        more: "> もっと見る"
       list_users:
         users: 社員一覧
       list_works:
