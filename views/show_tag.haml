@@ -1,18 +1,21 @@
 %h2
   = "#{t('profistory.views.show_tag.tag')}:"
   %span.glyphicon.glyphicon-tag
-  #{params[:name]}
+  %code
+    #{params[:name]}
 
 %div.row
-  %div.col-md-4
+  %div.col-md-6
     %h2= t('profistory.views.show_tag.works')
-    %ul
+    %ul.list-group
       - @works.each do |work|
-        %li
+        %li.list-group-item
+          = work.date.strftime('%Y/%m/%d')
           %a{href:to("works/#{work.title_escaped}")}= work.title
-  %div.col-md-4
+  %div.col-md-6
     %h2= t('profistory.views.show_tag.users')
-    %ul
+    %ul.list-group
       - @users.each do |user|
-        %li
+        %li.list-group-item
+          %img{src:gravatar_icon(user, 15)}
           %a{href:to("users/#{user.name}")}= user.screen_name
