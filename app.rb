@@ -132,7 +132,8 @@ namespace '/users' do
   end
 
   get do
-    @users = User.page(params[:page])
+    @users = User.order_by(:uid.asc)
+    @atoz = @users.map {|user| user.name[0].upcase }.uniq.sort
     haml :list_users
   end
 end
