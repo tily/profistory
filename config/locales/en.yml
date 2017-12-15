@@ -19,6 +19,7 @@ en:
         works: Recent Works
         users: Recent Employees
         tags: Tags
+        more: "> more"
       list_users:
         users: Employees
       list_works:

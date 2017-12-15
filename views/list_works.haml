@@ -1,5 +1,11 @@
 %h2= t('profistory.views.list_works.works')
-%ul
-  - @works.each do |work|
-    %li
-      %a{href:to("works/#{work.title_escaped}")}= work.title
+%div.row
+  - @years.each do |year|
+    %div.col-md-4
+      %h2= year
+      %ul
+        - @works.each do |work|
+          - if work.date.year == year
+            %li
+              #{work.date.strftime("%m/%d")}
+              %a{href:to("works/#{work.title_escaped}"),alt:work.description}= work.title
