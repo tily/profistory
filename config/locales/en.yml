@@ -24,6 +24,8 @@ en:
         users: Employees
       list_works:
         works: Works
+      list_tags:
+        tags: Tags 
       show_tag:
         tag: Tag
         users: Employees
