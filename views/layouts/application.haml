@@ -21,6 +21,8 @@
             = @work.title
         %span.profistory-navbar-right
           - if current_user
+            %a{href:to("works/*/edit")}= t('profistory.views.show_user.add_work')
+            &nbsp;|&nbsp;
             %a{href:to("users/#{current_user.name}")}= t('profistory.views.layout.application.my_page')
             &nbsp;|&nbsp;
             %a{href:to('logout')}= t('profistory.views.layout.application.logout')
