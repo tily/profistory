@@ -13,6 +13,8 @@
       - @users.each do |user|
         %li
           %a{href:to("users/#{user.name}")}= user.screen_name
+    %p
+      %a{href:to("users")}= t("profistory.views.list_all.more")
   %div.col-md-4
     %h2= t('profistory.views.list_all.tags')
     %ul.list-group
