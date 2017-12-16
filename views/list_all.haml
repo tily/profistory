@@ -1,25 +1,33 @@
 %div.row
   %div.col-md-4
-    %h2= t('profistory.views.list_all.works')
-    %ul
+    %div.clearfix{style:'position:relative'}
+      %h2= t('profistory.views.list_all.works')
+      %div{style:'position:absolute;bottom:8px;right:0;padding-bottom:100'}
+        %a.operation.more{href:to("works")}= t("profistory.views.list_all.more")
+    %ul.list-group
       - @works.each do |work|
-        %li
+        %li.list-group-item
+          = work.date.strftime('%Y/%m/%d')
           %a{href:to("works/#{work.title_escaped}")}= work.title
-    %p
-      %a{href:to("works")}= t("profistory.views.list_all.more")
   %div.col-md-4
-    %h2= t('profistory.views.list_all.users')
-    %ul
+    %div.clearfix{style:'position:relative'}
+      %h2= t('profistory.views.list_all.users')
+      %div{style:'position:absolute;bottom:8px;right:0;padding-bottom:100'}
+        %a.operation.more{href:to("users")}= t("profistory.views.list_all.more")
+    %ul.list-group
       - @users.each do |user|
-        %li
+        %li.list-group-item
+          %img{src:gravatar_icon(user, 15)}
           %a{href:to("users/#{user.name}")}= user.screen_name
-    %p
-      %a{href:to("users")}= t("profistory.views.list_all.more")
   %div.col-md-4
-    %h2= t('profistory.views.list_all.tags')
-    %ul
+    %div.clearfix{style:'position:relative'}
+      %h2= t('profistory.views.list_all.tags')
+      %div{style:'position:absolute;bottom:8px;right:0;padding-bottom:100'}
+        %a.operation.more{href:to("tags")}= t("profistory.views.list_all.more")
+    %ul.list-group
       - @tags.each do |tag|
-        %li
-          %a{href:to("tags/#{tag[:name]}")} #{tag[:name]}
-    %p
-      %a{href:to("tags")}= t("profistory.views.list_all.more")
+        %li.list-group-item
+          %span.glyphicon.glyphicon-tag
+          %code
+            %a.tag{href:to("tags/#{tag[:name]}")} #{tag[:name]}
+          %span.badge= tag[:count]

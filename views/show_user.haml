@@ -1,20 +1,18 @@
 %div
-  %h1= @user.screen_name
+  %h1
+    %img{src:gravatar_icon(@user, 36)}
+    = @user.screen_name
   %p
     %form.form-inline{role:'form',method:'POST',action:to("users/#{@user.name}")}
-      %strong= t('profistory.views.show_user.tags')
       %span.tags
         - @user.tags.each do |tag|
-          %a{href:to("tags/#{tag}")}= tag
+          %code
+            %a.tag{href:to("tags/#{tag}")}= tag
         -if @user == current_user
-          %a.add-tag{href:'javascript:void(0)'}= t('profistory.views.show_user.add_tag')
+          %a.operation.add-tag{href:'javascript:void(0)'}= @user.tags.empty? ? t('profistory.views.show_user.add_tag') : t('profistory.views.show_user.edit_tag')
       %span.edit-tags{style:'display: none;'}
         %input.form-control.input-sm{name:'tags',type:'text',value:@user.tags.join(", "),placeholder:t('profistory.views.show_user.add_tag_description')}
-        %a.cancel-add-tag{href:'javascript:void(0)'}= t('profistory.views.show_user.cancel_add_tag')
-  - if @user == current_user
-    %a{href:to("works/*/edit")}= t('profistory.views.show_user.add_work')
-    &nbsp;|&nbsp;
-  %a{href:to("users/#{@user.name}.json")}= t('profistory.views.show_user.get_json')
+        %a.operation.cancel-add-tag{href:'javascript:void(0)'}= t('profistory.views.show_user.cancel_add_tag')
 %div.row
   - @years.each do |year|
     %div.col-md-4

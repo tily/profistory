@@ -2,6 +2,13 @@ a:link,a:visited,a:hover,a:active {
   color: blue;
 }
 
+a.operation:link,
+a.operation:visited,
+a.operation:hover,
+a.operation:active {
+  color: #666666;
+}
+
 img {
   max-width: 100%;
 }
@@ -31,4 +38,13 @@ img.favicon {
 
 .profistory-links-textarea {
   height: 1000;
+}
+
+a.more {
+  float: right;
+}
+
+a.tag:link,a.tag:visited,a.tag:hover,a.tag:active {
+  /*color: #aa5511;*/
+  color: #c7254e;
 }

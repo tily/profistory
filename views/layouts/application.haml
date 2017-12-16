@@ -12,7 +12,10 @@
     %div.container
       %p.profistory-navbar
         %strong
-          %a{href:to('/')}= Settings.title
+          %a.operation{href:to('/')}
+            %img{src:'/icon.jpg',style:'height:1.5em'}
+            &nbsp;
+          %a.operation{href:to('/')}= Settings.title
           - if @user
             &nbsp;>&nbsp;
             %a{href:to("users/#{@user.name}")} #{@user.screen_name}
@@ -21,9 +24,11 @@
             = @work.title
         %span.profistory-navbar-right
           - if current_user
-            %a{href:to("users/#{current_user.name}")}= t('profistory.views.layout.application.my_page')
+            %a.operation{href:to("works/*/edit")}= t('profistory.views.show_user.add_work')
             &nbsp;|&nbsp;
-            %a{href:to('logout')}= t('profistory.views.layout.application.logout')
+            %a.operation{href:to("users/#{current_user.name}")}= t('profistory.views.layout.application.my_page')
+            &nbsp;|&nbsp;
+            %a.operation{href:to('logout')}= t('profistory.views.layout.application.logout')
           - else
             %a{href:to("auth/#{Settings.auth.provider}")}= t('profistory.views.layout.application.login')
       %hr

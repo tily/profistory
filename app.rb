@@ -19,6 +19,12 @@ helpers do
   def allowed_to_edit?(work, user)
     work.users.find(user) rescue nil
   end
+
+  def gravatar_icon(user, size=nil)
+    url = "//gravatar.com/avatar/#{Digest::MD5.hexdigest(user.uid)}"
+    url += "?size=#{size}" if size
+    url
+  end
 end
 
 before do
@@ -141,6 +147,12 @@ end
 namespace '/tags' do
   get do
     @tags = Tag.all
+    @max_count = @tags.map {|tag| tag[:count] }.max
+    @min_count = @tags.map {|tag| tag[:count] }.min
+    @tags.each do |tag|
+      weight = tag[:count].to_f / (@max_count - @min_count)
+      tag[:size] = (weight * 5).round
+    end
     haml :list_tags
   end
 

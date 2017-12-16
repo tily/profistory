@@ -16,8 +16,8 @@ en:
         links_description: one url per one line, insert empty lines to group your links
         update: Update
       list_all:
-        works: Recent Works
-        users: Recent Employees
+        works: Works
+        users: Employees
         tags: Tags
         more: "> more"
       list_users:
@@ -34,7 +34,8 @@ en:
         tags: "Tags:"
         add_work: Add work
         get_json: Get JSON
-        add_tag: Add
+        add_tag: Add tag
+        edit_tag: Edit
         add_tag_description: Separate with comma
         cancel_add_tag: Cancel
       show_work:
