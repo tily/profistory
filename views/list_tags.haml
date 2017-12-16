@@ -1,4 +1,5 @@
 %h2= t('profistory.views.list_tags.tags')
 %div.row
   - @tags.each do |tag|
-    %a{href:to("tags/#{tag}")} #{tag[:name]}
+    %code
+      %a.tag{href:to("tags/#{tag[:name]}"),style:"font-size:#{tag[:size]}em"} #{tag[:name]}

@@ -34,7 +34,8 @@ en:
         tags: "タグ:"
         add_work: 仕事を追加
         get_json: JSON としてダウンロード
-        add_tag: 追加
+        add_tag: タグ追加
+        edit_tag: 編集
         add_tag_description: カンマ区切り
         cancel_add_tag: キャンセル
       show_work:

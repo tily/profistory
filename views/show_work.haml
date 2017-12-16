@@ -1,28 +1,26 @@
-- if current_user
-  - if (@work.users.find(current_user.id) rescue nil)
-    - if allowed_to_edit?(@work, current_user)
-      %a{href:to("works/#{@work.title_escaped}/edit")}= t('profistory.views.show_work.edit_work')
-    - if @work.users.size != 1
-      %form{method:'POST',action:to("works/#{@work.title_escaped}/leave")}
-        %button{type:'submit',class:'btn btn-default'}= t('profistory.views.show_work.leave')
-  - else
-    %form{method:'POST',action:to("works/#{@work.title_escaped}/join")}
-      %button{type:'submit',class:'btn btn-default'}= t('profistory.views.show_work.join')
 %div
   %h1
+    = "#{@work.date.strftime('%Y-%m-%d')}"
     = @work.title
     %small
       = @work.description
+  - if current_user
+    %form.hide.join{method:'POST',action:to("works/#{@work.title_escaped}/join")}
+    %form.hide.leave{method:'POST',action:to("works/#{@work.title_escaped}/leave")}
+    - if allowed_to_edit?(@work, current_user) && @work.users.size != 1
+      %a.operation{href:to("works/#{@work.title_escaped}/edit")}= t('profistory.views.show_work.edit_work')
+      |
+      %a.operation.leave{href:'javascript:void(0)'}= t('profistory.views.show_work.leave')
+    - else
+      %a.operation.join{href:'javascript:void(0)'}= t('profistory.views.show_work.join')
   %p
-    %strong= t('profistory.views.show_work.tags')
     - @work.tags.each do |tag|
-      %span.glyphicon.glyphicon-tag
-      %a{href:to("tags/#{tag}")}= tag
+      %code
+        %a.tag{href:to("tags/#{tag}")}= tag
   %p
-    %strong= t('profistory.views.show_work.members')
     - @work.users.each do |user|
+      %img{src:gravatar_icon(user, 15)}
       %a{href:to("users/#{user.name}")}= user.screen_name
-  %p= "#{@work.date.strftime('%Y-%m-%d')}"
 - @work.links.each_with_index do |links, i|
   %div.row
     - links.each do |link|
@@ -58,3 +56,5 @@
       }  
     })
   })
+  $('a.join').click(() => { $('form.join').submit() })
+  $('a.leave').click(() => { $('form.leave').submit() })
