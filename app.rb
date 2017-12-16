@@ -147,6 +147,12 @@ end
 namespace '/tags' do
   get do
     @tags = Tag.all
+    @max_count = @tags.map {|tag| tag[:count] }.max
+    @min_count = @tags.map {|tag| tag[:count] }.min
+    @tags.each do |tag|
+      weight = tag[:count].to_f / (@max_count - @min_count)
+      tag[:size] = (weight * 5).round
+    end
     haml :list_tags
   end
 

@@ -34,7 +34,8 @@ en:
         tags: "Tags:"
         add_work: Add work
         get_json: Get JSON
-        add_tag: Add
+        add_tag: Add tag
+        edit_tag: Edit
         add_tag_description: Separate with comma
         cancel_add_tag: Cancel
       show_work:

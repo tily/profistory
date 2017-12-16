@@ -16,6 +16,9 @@ class Default < Thor
 
   desc 'load_random_data', 'load random data'
   def load_random_data
+    doc = Nokogiri::HTML(open("https://pinboard.in/u:youpy").read)
+    tags = doc.search('#tag_cloud a.tag').map {|x| x.text }
+
     users = []
     1.upto(200) do |i|
       first_name = Faker::Japanese::Name.first_name
@@ -29,7 +32,7 @@ class Default < Thor
         provider: "saml",
         screen_name: "#{last_name} #{first_name}",
         name: uid,
-        tags: ["hoge", "fuga"],
+        tags: [tags.sample, tags.sample, tags.sample],
       )
     end
 
@@ -43,7 +46,7 @@ class Default < Thor
           "http://www.google.com",
           "http://www.google.com",
         ].join("\n"),
-        tags: ["hoge", "fuga"],
+        tags: [tags.sample, tags.sample, tags.sample],
         users: [users.sample, users.sample, users.sample],
       )
     end
