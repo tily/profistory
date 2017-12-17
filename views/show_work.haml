@@ -7,10 +7,11 @@
   - if current_user
     %form.hide.join{method:'POST',action:to("works/#{@work.title_escaped}/join")}
     %form.hide.leave{method:'POST',action:to("works/#{@work.title_escaped}/leave")}
-    - if allowed_to_edit?(@work, current_user) && @work.users.size != 1
+    - if allowed_to_edit?(@work, current_user)
       %a.operation{href:to("works/#{@work.title_escaped}/edit")}= t('profistory.views.show_work.edit_work')
-      |
-      %a.operation.leave{href:'javascript:void(0)'}= t('profistory.views.show_work.leave')
+      - if @work.users.size != 1
+        |
+        %a.operation.leave{href:'javascript:void(0)'}= t('profistory.views.show_work.leave')
     - else
       %a.operation.join{href:'javascript:void(0)'}= t('profistory.views.show_work.join')
   %p
