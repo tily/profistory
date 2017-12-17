@@ -1,0 +1,60 @@
+%div
+  %h1
+    = "#{@work.date.strftime('%Y-%m-%d')}"
+    = @work.title
+    %small
+      = @work.description
+  - if current_user
+    %form.hide.join{method:'POST',action:to("works/#{@work.title_escaped}/join")}
+    %form.hide.leave{method:'POST',action:to("works/#{@work.title_escaped}/leave")}
+    - if allowed_to_edit?(@work, current_user) && @work.users.size != 1
+      %a.operation{href:to("works/#{@work.title_escaped}/edit")}= t('profistory.views.show_work.edit_work')
+      |
+      %a.operation.leave{href:'javascript:void(0)'}= t('profistory.views.show_work.leave')
+    - else
+      %a.operation.join{href:'javascript:void(0)'}= t('profistory.views.show_work.join')
+  %p
+    - @work.tags.each do |tag|
+      %code
+        %a.tag{href:to("tags/#{tag}")}= tag
+  %p
+    - @work.users.each do |user|
+      %img{src:gravatar_icon(user, 15)}
+      %a{href:to("users/#{user.name}")}= user.screen_name
+- @work.links.each_with_index do |links, i|
+  %div.row
+    - links.each do |link|
+      %div.col-md-3.profistory-work-link
+        %img.favicon{src:'/favicon.ico'}
+        %a{href:link,target:'_blank'}= link
+  - if i != @work.links.size - 1
+    %hr
+:javascript
+  var width = $('div.row div').width()
+  $('div.row a').each(function(i, e) {
+    $(e).embedly({
+      endpoint: 'extract',
+      query: { maxwidth: width },
+      key: '#{Settings.embedly.api_key}',
+      done: function(result) {
+        console.log(result)
+        if(result[0].type == 'image') {
+          $(e).prev().remove()
+          $(e).html($('<img src="' + result[0].url + '">'))
+         } else if(result[0].media && result[0].media.html) {
+          $(e).prev().remove()
+          $(e).html(result[0].media.html)
+        } else {
+          if(result[0].favicon_url) {
+            $(e).prev().attr('src', result[0].favicon_url)
+          }
+          if(result[0].title) {
+            $(e).html(result[0].title)
+          }
+          $(e).after('<br />', result[0].description)
+        }
+      }  
+    })
+  })
+  $('a.join').click(() => { $('form.join').submit() })
+  $('a.leave').click(() => { $('form.leave').submit() })
