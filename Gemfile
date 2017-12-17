@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 gem 'sinatra'
-gem 'sinatra-contrib', require: 'sinatra/namespace'
+gem 'sinatra-contrib', require: ['sinatra/namespace', 'sinatra/respond_with']
 gem 'omniauth-twitter'
 gem 'ruby-saml',
   git:    'https://github.com/tily/ruby-saml.git',
