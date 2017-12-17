@@ -6,6 +6,7 @@ class User
   field :name, :type => String
   field :screen_name, :type => String
   field :provider, :type => String
+  field :api_key, :type => String
   has_and_belongs_to_many :works
   def self.create_with_omniauth(auth)
     create! do |account|
@@ -14,6 +15,7 @@ class User
       names = extract_names_from_omniauth(auth)
       account.name = names[:name]
       account.screen_name = names[:screen_name]
+      account.api_key = SecureRandom.hex(16)
     end
   end
 
