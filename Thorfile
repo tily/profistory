@@ -2,10 +2,7 @@ require 'open-uri'
 Bundler.require
 require 'faker/japanese'
 require 'romaji'
-require_relative './config/boot'
-require_relative './models/user'
-require_relative './models/work'
-require_relative './models/tag'
+require_relative './core'
 
 class Default < Thor
   desc 'cleanup_db', 'cleanup database'

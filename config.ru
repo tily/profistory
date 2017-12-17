@@ -1,2 +1,2 @@
-require './app.rb'
-run Sinatra::Application
+require './gui.rb'
+map('/') { run Profistory::GUI }
