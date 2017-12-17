@@ -27,6 +27,8 @@ class Profistory
     I18n.load_path = Dir['config/locales/*.yml']
     I18n.backend.load_translations
 
+    respond_to :html
+
     [:get, :post].each do |method|
       send(method, '/auth/:provider/callback') do
         auth = request.env["omniauth.auth"]

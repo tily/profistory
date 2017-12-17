@@ -5,6 +5,7 @@ require_relative './models/tag'
 
 class Profistory
   class Core < Sinatra::Base
+    register Sinatra::RespondWith
     register Config
     Mongoid.load!("config/mongoid.yml")
 
@@ -45,40 +46,69 @@ class Profistory
       else
         @work = current_user.works.create(attributes)
       end
-      if @work.save
-        redirect to("works/#{@work.title_escaped}")
-      else
-        haml :edit_work
+      save = @work.save
+
+      respond_to do |f|
+        f.html do
+          if save
+            redirect to("works/#{@work.title_escaped}")
+          else
+            haml :edit_work
+          end
+        end
+        f.json do
+          if save
+            jbuilder :show_work
+          else
+            {errors: @work.errors.to_json}
+          end
+        end
       end
     end
 
     def show_work
       @work = Work.where(:title => CGI.unescape(params[:title])).first
-      haml :show_work
+      respond_to do |f|
+        f.html { haml :show_work }
+        f.json { jbuilder :show_work }
+      end
     end
 
     def join_work
       @work = Work.where(:title => CGI.unescape(params[:title])).first
       @work.users.push(current_user)
-      redirect to("works/#{@work.title_escaped}")
+      respond_to do |f|
+        f.html { redirect to("works/#{@work.title_escaped}") }
+        f.json { jbuilder :show_work }
+      end
     end
 
     def leave_work
       @work = Work.where(:title => CGI.unescape(params[:title])).first
       @work.users.delete(current_user)
-      redirect to("works/#{@work.title_escaped}")
+      respond_to do |f|
+        f.html { redirect to("works/#{@work.title_escaped}") }
+        f.json { jbuilder :show_work }
+      end
     end
 
     def list_works
       @works = Work.desc(:date)
       @years = @works.map {|work| work.date.year }.uniq.sort.reverse
-      haml :list_works
+      respond_to do |f|
+        f.html { haml :list_works }
+        f.json { jbuilder :list_works }
+      end
     end
 
     def list_users
       @users = User.order_by(:uid.asc)
       @atoz = @users.map {|user| user.name[0].upcase }.uniq.sort
       haml :list_users
+      respond_to do |f|
+        f.html { haml :list_users }
+        f.json { jbuilder :list_users }
+      end
     end
 
     def update_user
@@ -86,14 +116,20 @@ class Profistory
       @user.update_attributes!(
         tag_list: params[:tags]
       )
-      redirect to("users/#{params[:user_name]}")
+      respond_to do |f|
+        f.html { redirect to("users/#{params[:user_name]}") }
+        f.json { jbuilder :show_user }
+      end
     end
 
     def show_user
       @user = User.where(:name => params[:user_name]).first
       @works = @user.works.desc(:date)
       @years = @user.works.map {|work| work.date.year }.uniq.sort.reverse
-      haml :show_user
+      respond_to do |f|
+        f.html { haml :show_user }
+        f.json { jbuilder :show_user }
+      end
     end
 
     def list_tags
@@ -103,13 +139,19 @@ class Profistory
         weight = tag[:count].to_f / (@max_count - @min_count)
         tag[:size] = (weight * 5).round
       end
-      haml :list_tags
+      respond_to do |f|
+        f.html { haml :list_tags }
+        f.json { jbuilder :list_tags }
+      end
     end
 
     def show_tag
       @users = User.tagged_with(params[:name])
       @works = Work.tagged_with(params[:name])
-      haml :show_tag
+      respond_to do |f|
+        f.html { haml :show_tag }
+        f.json { jbuilder :show_tag }
+      end
     end
   end
 end
