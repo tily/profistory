@@ -44,5 +44,9 @@ class Profistory
       get('.json')       { list_tags }
       get('/:name.json') { show_tag  }
     end
+
+    error 401 do
+      {error: {message: 'Unauthorized'}}.to_json
+    end
   end
 end
