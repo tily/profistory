@@ -38,6 +38,7 @@ class Profistory
     namespace '/users' do
       get('.json')            { list_users }
       get('/:user_name.json') { show_user  }
+      put('/:user_name.json') { update_user }
     end
 
     namespace '/tags' do
