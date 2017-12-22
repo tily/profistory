@@ -28,7 +28,7 @@ gem 'rack-contrib'
 gem 'thor'
 
 group :development do
-	gem 'shotgun'
+  gem 'shotgun'
   gem 'faker-japanese'
   gem 'romaji'
 end
