@@ -32,3 +32,8 @@ group :development do
   gem 'faker-japanese'
   gem 'romaji'
 end
+
+group :test do
+  gem 'rack-test'
+  gem 'rspec'
+end
