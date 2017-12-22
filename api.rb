@@ -18,9 +18,12 @@ class Profistory
     before do
       halt 401 if api_key.nil? || current_user.nil?
       request.body.rewind
-      json_params = JSON.parse(request.body.read)
-      json_params.each do |k, v|
-        params[k] = v
+      body = request.body.read
+      if body != ""
+        json_params = JSON.parse(body)
+        json_params.each do |k, v|
+          params[k] = v
+        end
       end
     end
 
