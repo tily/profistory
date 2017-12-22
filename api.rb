@@ -16,7 +16,7 @@ class Profistory
     end
 
     before do
-      halt 403 if api_key.nil? || current_user.nil?
+      halt 401 if api_key.nil? || current_user.nil?
       request.body.rewind
       json_params = JSON.parse(request.body.read)
       json_params.each do |k, v|
