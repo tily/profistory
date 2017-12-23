@@ -47,8 +47,17 @@ class Profistory
       get('/:name.json') { show_tag  }
     end
 
+    error Mongoid::Errors::DocumentNotFound do
+      status 404
+      {error: {message: "Not found"}}.to_json
+    end
+
     error 401 do
       {error: {message: 'Unauthorized'}}.to_json
+    end
+
+    error 500 do |error|
+      {error: {message: 'Internal server error'}}.to_json
     end
   end
 end
