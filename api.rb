@@ -4,6 +4,7 @@ class Profistory
   class API < Core
     register Sinatra::Namespace
     register Kaminari::Helpers::SinatraHelpers
+    disable :show_exceptions
 
     respond_to :json
 
