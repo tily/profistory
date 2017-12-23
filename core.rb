@@ -67,7 +67,7 @@ class Profistory
     end
 
     def show_work
-      @work = Work.where(:title => CGI.unescape(params[:title])).first
+      @work = Work.find_by!(:title => CGI.unescape(params[:title]))
       respond_to do |f|
         f.html { haml :show_work }
         f.json { jbuilder :show_work }
@@ -123,7 +123,7 @@ class Profistory
     end
 
     def show_user
-      @user = User.where(:name => params[:user_name]).first
+      @user = User.find_by!(name: params[:user_name])
       @works = @user.works.desc(:date)
       @years = @user.works.map {|work| work.date.year }.uniq.sort.reverse
       respond_to do |f|
