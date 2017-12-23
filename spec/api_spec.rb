@@ -58,6 +58,19 @@ describe Profistory::API do
       end
 
       context 'GET /works/:title.json' do
+        it 'gets the work if there is a work for the title' do
+          work = user.works.create!(title: SecureRandom.hex(16), links_text: 'http://www.google.com')
+          get "/works/#{work.title_escaped}.json"
+          expect(last_response.status).to eq(200)
+          expect(last_response_json['work']['title']).to eq(work.title)
+        end
+
+        it 'returns 404 error if there is no work for the title' do
+          Work.delete_all
+          get '/works/non-existent-title.json'
+          expect(last_response.status).to eq(404)
+          expect(last_response_json['error']['message']).to eq('Not found')
+        end
       end
 
       context 'PUT /works/:title.json' do
